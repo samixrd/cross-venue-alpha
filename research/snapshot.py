@@ -118,6 +118,11 @@ for w in sorted(W):
 md=["# VEGA weekly quant snapshots — STATE ESTIMATION FOLD (alpha frozen)","",
     "Causal-only: z uses EWMA over past hours; half-life/leadership attributed at series end (lagged).",
     "net = gross − 24 bps fee floor, MID mode — spread slippage pending executable tape.","",
+    "**CONVERGENCE — exact definition:** an episode is a convergence event iff its PAIRED",
+    "gross PnL > 0, i.e. ((D_rich,t − D_rich,t+6h) + (D_cheap,t+6h − D_cheap,t))/2 > 0 in log units.",
+    "That is: the average absolute dislocation of the two legs shrank over the hold —",
+    "NOT zero-crossing, NOT 50%-capture, NOT full normalization. conv% = share of episodes",
+    "with positive paired gross. (State monitor only: measures, never filters trades.)","",
     "| week | disloc med (bps) | half-life (min) | episodes | conv% | net med (bps) | best | worst | venue lead |",
     "|---|---|---|---|---|---|---|---|---|"]
 for r in rows:
@@ -135,6 +140,8 @@ if len(rows)>=2:
            "- convergence %.1f%% → %.1f%%"%(a["convergence_rate_pct"],b["convergence_rate_pct"]),
            "- net median %s → %s bps"%(a["median_net_bps_fee_floor"],b["median_net_bps_fee_floor"]),
            "- best names %s → %s"%(a["best"],b["best"])]
-md += ["","**Rule: no snapshot metric may alter the trigger, universe, horizon, or estimator.**",""]
+md += ["**Rule: no snapshot metric may alter the trigger, universe, horizon, or estimator.**",
+       "**W38-type findings are market-state observations, never alpha discoveries; a state-**",
+       "**conditioned trade modification is a NEW declared fold tested prospectively.**",""]
 open(os.path.join(OUTDIR,"all_weeks.md"),"w",encoding="utf-8").write("\n".join(md))
 print("\n".join(md[-14:]))
