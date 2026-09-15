@@ -34,10 +34,7 @@ def load():
             r = json.loads(line)
             ts = int(datetime.datetime.fromisoformat(r["ts_utc"]).timestamp()*1000)
             ts -= ts % 3600000
-            prev = by[r["sym"]][r["venue"]].get(ts)
-            if prev is None or (prev.get("mid") or 0) != r.get("mid"):
-                pass
-            by[r["sym"]][r["venue"]][ts] = r   # latest sample of the hour wins
+            by[r["sym"]].setdefault(r["venue"], {})[ts] = r   # latest sample of the hour wins
     return by
 
 def is_weekend(ts):
