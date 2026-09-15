@@ -22,7 +22,7 @@ existed.
 
 | Layer | Status |
 |---|---|
-| Mid-price convergence, 42–120d history | **STRONG** — cluster-robust t 7.0–9.5 (TSLA/NVDA/AAPL), placebo negative, sign-shuffle ≈ 0, half-life ≈ 1h |
+| Mid-price convergence, **105d** history | **STRONG** — net-of-24bps-fee +17 to +29 bps/ep, cluster-robust t 8.6–11.6 (TSLA/NVDA/AAPL), placebo −, sign-shuffle ≈ 0, half-life ≈ 1h |
 | Net-of-carry (actual settlement rates) | **STRONG** (funding differentials subtracted, not assumed) |
 | Historical executable bid/ask | **UNAVAILABLE** — no venue stores it. Anyone who says otherwise backtested a fantasy |
 | Forward executable (real 3-venue quotes) | **PENDING** — collector running now; verdict pre-declared: net>0 AND ≥5 weekend pair episodes AND SPY control behaving |

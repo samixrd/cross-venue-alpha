@@ -1,3 +1,6 @@
 venue_index.json
 data/tape/_chain_state.json
 __pycache__/
+tape/20*.jsonl
+tape/_chain_state.json
+verification/root_*.json
