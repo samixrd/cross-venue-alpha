@@ -8,15 +8,15 @@ import json, urllib.request, datetime, os, math, sys
 STORE = r"D:\wk-probes\venue_index.json"
 SYMS = ["TSLAUSDT","AAPLUSDT","NVDAUSDT","MSFTUSDT","GOOGLUSDT","AMZNUSDT","METAUSDT","SPYUSDT","QQQUSDT","COINUSDT","MSTRUSDT","HOODUSDT","CRCLUSDT"]
 VENUES = ["bitget","binance","bybit"]
-DAYS_BARS = 42     # bitget history-candles: 200 bars/page, enough for ~100d; keep index lean
-DAYS_FUND = 60     # funding history pageSize 200 = ~66 days per venue
+DAYS_BARS = 105     # bitget history-candles: 200 bars/page, enough for ~100d; keep index lean
+DAYS_FUND = 105     # funding history pageSize 200 = ~66 days per venue
 
 def get(u):
     return json.load(urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent":"Mozilla/5.0"}), timeout=25))
 
 def bars_bitget(s):
     out={}; end=None
-    stop=(datetime.datetime(2026,9,15)-datetime.timedelta(days=DAYS_BARS)).timestamp()*1000
+    stop=(datetime.datetime.now()-datetime.timedelta(days=DAYS_BARS)).timestamp()*1000
     for _ in range(30):
         u=f"https://api.bitget.com/api/v2/mix/market/history-candles?symbol={s}&productType=usdt-futures&granularity=1H&limit=200"
         if end: u+=f"&endTime={end}"
@@ -29,7 +29,7 @@ def bars_bitget(s):
     return out
 
 def bars_binance(s):
-    out={}; end=int(datetime.datetime(2026,9,15).timestamp()*1000)
+    out={}; end=int(datetime.datetime.now().timestamp()*1000)
     stop=end-DAYS_BARS*86400000
     cur=stop
     while cur<end:
@@ -41,7 +41,7 @@ def bars_binance(s):
     return out
 
 def bars_bybit(s):
-    out={}; cur=int(datetime.datetime(2026,9,15).timestamp()*1000)
+    out={}; cur=int(datetime.datetime.now().timestamp()*1000)
     stop=cur-DAYS_BARS*86400000
     while True:
         rows=get(f"https://api.bybit.com/v5/market/kline?category=linear&symbol={s}&interval=60&end={cur}&limit=1000").get("result",{}).get("list",[])
@@ -63,7 +63,7 @@ def fund_bitget(s):
 def fund_binance(s):
     out={}
     try:
-        end=int(datetime.datetime(2026,9,15).timestamp()*1000)
+        end=int(datetime.datetime.now().timestamp()*1000)
         rows=get(f"https://fapi.binance.com/fapi/v1/fundingRate?symbol={s}&endTime={end}&limit=1000")
         for r in rows: out[int(r['fundingTime'])]=float(r['fundingRate'])
         if rows:
@@ -75,7 +75,7 @@ def fund_binance(s):
 def fund_bybit(s):
     out={}
     try:
-        end=int(datetime.datetime(2026,9,15).timestamp()*1000)
+        end=int(datetime.datetime.now().timestamp()*1000)
         rows=get(f"https://api.bybit.com/v5/market/funding/history?category=linear&symbol={s}&end={end}&limit=1000").get("result",{}).get("list",[])
         for r in rows: out[int(r['fundingTimestamp'])]=float(r['fundingRate'])
     except Exception: pass
