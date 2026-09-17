@@ -3,8 +3,10 @@ Usage: python vega_root.py root --date 2026-09-20   (Sun 17:20 UTC task)
        python vega_root.py verify
 Frozen cutoff: weekend samples up to Sun 17:00 UTC (same convention as WD)."""
 import json, glob, os, sys, hashlib, datetime, argparse
-ROOT=r"D:\cross-venue-alpha"; TAPE=os.path.join(ROOT,"tape"); MAN=os.path.join(ROOT,"verification")
-os.makedirs(MAN,exist_ok=True)
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+TAPE = os.path.join(ROOT, "tape")
+MAN  = os.path.join(ROOT, "verification")
+os.makedirs(MAN, exist_ok=True)
 def sha(b): return hashlib.sha256(b).hexdigest()
 def lines_upto(cutoff):
     out=[]

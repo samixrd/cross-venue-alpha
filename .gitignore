@@ -1,7 +1,19 @@
-verification/snapshots/all_weeks.md
+﻿# Local machine: large data files not tracked in git
 venue_index.json
 data/tape/_chain_state.json
+data/venue_index.json
 __pycache__/
+*.pyc
+*.pyo
+
+# Tape and chain state: gitignored LOCALLY but force-added by GitHub Actions
+# (local machine uses D:\path hardcodes; cloud uses the committed files)
+# NOTE: CI uses  git add -f  to override these for cloud persistence
 tape/20*.jsonl
 tape/_chain_state.json
+
+# Verification roots: same — local uses Task Scheduler, cloud uses vega_root.yml
 verification/root_*.json
+
+# Snapshot history (state estimator; not evidence)
+verification/snapshots/all_weeks.md

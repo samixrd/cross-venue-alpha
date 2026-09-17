@@ -17,12 +17,13 @@ Verdict (pre-declared, PROTOCOL §4):
 """
 import json, glob, os, math, datetime, sys
 from collections import defaultdict
-sys.path.insert(0, r"D:\cross-venue-alpha")
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, ROOT)
 from strategy.signal import VEN, Z_TRIGGER, HOLD_H, LAM, WARMUP
 from strategy.execution import pair_pnl
 
-TAPE = r"D:\cross-venue-alpha\tape"
-OUT  = r"D:\cross-venue-alpha\verification"
+TAPE = os.path.join(ROOT, "tape")
+OUT  = os.path.join(ROOT, "verification")
 os.makedirs(OUT, exist_ok=True)
 
 def load():

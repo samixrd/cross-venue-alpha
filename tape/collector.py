@@ -24,7 +24,8 @@ APIs (public, keyless): Bitget /api/v2/mix/market/tickers ;
 """
 import json, urllib.request, datetime, time, os, sys, hashlib
 
-OUTDIR = r"D:\cross-venue-alpha\tape"
+ROOT   = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+OUTDIR = os.path.join(ROOT, "tape")
 STATE  = os.path.join(OUTDIR, "_chain_state.json")
 os.makedirs(OUTDIR, exist_ok=True)
 
@@ -120,14 +121,30 @@ def in_weekend(dt):
     if wd==0: return h<=21
     return False
 
-def run_daemon():
-    print("v2 three-venue collector up", flush=True)
+def run_daemon(duration_minutes=None):
+    print("v2 three-venue collector up", f"(duration: {duration_minutes}m)" if duration_minutes else "(infinite)", flush=True)
+    start_time = time.time()
     while True:
         try: sample_once()
-        except Exception as e: print("cycle fail",e,flush=True)
-        now=datetime.datetime.now(datetime.timezone.utc)
-        time.sleep(300 if in_weekend(now) else 3600)
+        except Exception as e: print("cycle fail", e, flush=True)
+        now = datetime.datetime.now(datetime.timezone.utc)
+        sleep_sec = 300 if in_weekend(now) else 3600
+        if duration_minutes:
+            elapsed = time.time() - start_time
+            if elapsed + sleep_sec >= duration_minutes * 60:
+                rem = max(0, duration_minutes * 60 - elapsed)
+                if rem > 10: time.sleep(rem)
+                print("duration limit reached, exiting cleanly", flush=True)
+                break
+        time.sleep(sleep_sec)
 
-if __name__=="__main__":
-    if "--now" in sys.argv: sample_once(verbose=True)
-    else: run_daemon()
+if __name__ == "__main__":
+    if "--now" in sys.argv:
+        sample_once(verbose=True)
+    elif "--duration" in sys.argv:
+        idx = sys.argv.index("--duration")
+        mins = float(sys.argv[idx + 1]) if len(sys.argv) > idx + 1 else 30
+        run_daemon(duration_minutes=mins)
+    else:
+        run_daemon()
+

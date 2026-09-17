@@ -1,0 +1,58 @@
+﻿name: VEGA Tape Collector (24/7 Cloud)
+
+on:
+  schedule:
+    # Every 5 minutes — collector samples every tick on weekends, hourly on weekdays
+    # GitHub Actions cron minimum = 5 min; on weekdays it just over-samples (forward_readout hourly-rounds anyway)
+    - cron: '*/5 * * * *'
+  workflow_dispatch:       # manual trigger from GitHub UI anytime
+
+concurrency:
+  group: vega-collector    # only 1 run at a time; skip if already running
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4       # each run must finish in 4 min (well under the 5-min cron cadence)
+
+    permissions:
+      contents: write        # needed to push tape data back
+
+    steps:
+      - name: Checkout repo (with full tape history)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1     # shallow clone is fine; we just need the chain state file
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Restore chain state from repo (force-untrack gitignore)
+        run: |
+          # The _chain_state.json is gitignored on local machine but we track it in Actions
+          # It was committed by the previous run via git add -f
+          echo "Chain state file present:" && ls tape/ | grep chain || echo "No chain state yet (GENESIS run)"
+
+      - name: Sample once from all 3 venues (Bitget / Binance / Bybit)
+        run: python tape/collector.py --now
+        env:
+          PYTHONUNBUFFERED: '1'
+
+      - name: Commit and push new tape data
+        run: |
+          git config user.name  "VEGA-Bot"
+          git config user.email "vega-bot@github-actions"
+          # Force-add gitignored tape files
+          git add -f tape/*.jsonl tape/_chain_state.json 2>/dev/null || true
+          # Check if there is actually new data to commit
+          if git diff --cached --quiet; then
+            echo "No new data to commit (all venues may have been unreachable)"
+          else
+            TIMESTAMP=2026-09-18T04:16:46Z
+            IS_WE=WEEKDAY
+            git commit -m "tape:  []"
+            git push
+          fi
