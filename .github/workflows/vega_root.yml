@@ -1,8 +1,8 @@
-﻿name: VEGA Merkle Root Commit (Sun 17:20 UTC)
+﻿name: VEGA Merkle Root (Sun 17:20 UTC)
 
 on:
   schedule:
-    - cron: '20 17 * * 0'   # Every Sunday 17:20 UTC = pre-declared cutoff
+    - cron: '20 17 * * 0'
   workflow_dispatch:
     inputs:
       date:
@@ -24,12 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0     # need full tape history
-
-      - name: Restore all tape files
-        run: |
-          git fetch --all
-          ls tape/
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
@@ -37,8 +32,8 @@ jobs:
 
       - name: Commit Merkle root
         run: |
-          DATE=${{ github.event.inputs.date || '2026-09-20' }}
-          python verification/vega_root.py root --date $DATE
+          DATE="${{ github.event.inputs.date || '2026-09-20' }}"
+          python verification/vega_root.py root --date "$DATE"
 
       - name: Push root manifest
         run: |
@@ -48,6 +43,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "Root already committed"
           else
-            git commit -m "vega_root: Merkle commitment 2026-09-18T04:16:58Z"
+            git commit -m "vega_root: Merkle commitment $(date -u +%Y-%m-%dT%H:%M:%SZ)"
             git push
           fi
