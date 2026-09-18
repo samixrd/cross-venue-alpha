@@ -1,7 +1,6 @@
-﻿# Local machine: large data files not tracked in git
-venue_index.json
+# Local machine: large data files not tracked in git
+/venue_index.json
 data/tape/_chain_state.json
-data/venue_index.json
 __pycache__/
 *.pyc
 *.pyo

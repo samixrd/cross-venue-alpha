@@ -197,20 +197,7 @@
       position: relative;
     }
 
-    .metric-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: var(--line-strong);
-    }
-
-    .metric-card.accent-collecte::before { background: var(--fam-collecte); }
-    .metric-card.accent-analyse::before { background: var(--fam-analyse); }
-    .metric-card.accent-action::before { background: var(--fam-action); }
-    .metric-card.accent-green::before { background: var(--green); }
+    /* Metric cards: clean border, no colored top line */
 
     .metric-label {
       font-size: 11px;
@@ -408,7 +395,7 @@
           <span>VEGA</span>
           <span class="brand-pill">ALPHA FACTORY ? ARBITRAGE</span>
         </div>
-        <div class="brand-sub">Cross-Venue Net-of-Carry Dislocation // Bitget AI Hackathon S2</div>
+        <div class="brand-sub">Cross-Venue Net-of-Carry Dislocation | Bitget AI Hackathon S2</div>
       </div>
 
       <div class="header-center">
@@ -476,7 +463,7 @@
         <div class="metric-value" id="mRecordCount">0</div>
         <div class="metric-sub">
           <span>Chain Tip: <span class="mono-hash" id="mChainTip">--</span></span>
-          <span id="mSymbolsVenues">13 sym ? 3 ven</span>
+          <span id="mSymbolsVenues">13 sym x 3 ven</span>
         </div>
       </div>
     </div>
@@ -494,9 +481,9 @@
             <svg id="equitySvg" viewBox="0 0 800 280" preserveAspectRatio="none"></svg>
           </div>
           <div style="display: flex; justify-content: space-between; font-size: 10px; color: var(--ink-3); margin-top: 8px;">
-            <span>DAY 1 (MAY 29) ? IN-SAMPLE TRAINING</span>
+            <span>DAY 1 (MAY 29) - IN-SAMPLE TRAINING</span>
             <span style="color: var(--fam-analyse);">DAY 60 SPLIT (JULY 27)</span>
-            <span>DAY 105 (SEPT 15) ? OUT-OF-SAMPLE</span>
+            <span>DAY 105 (SEP 15) - OUT-OF-SAMPLE</span>
           </div>
         </div>
       </div>
@@ -727,15 +714,33 @@
         const splitIdx = Math.floor(curve.length * 0.58);
         const splitX = (padX + (splitIdx / (curve.length - 1)) * (width - 2 * padX)).toFixed(1);
 
+        const firstPt = points.split(' ')[0];
+        const lastPt = points.split(' ')[points.split(' ').length - 1];
+        const lastX = lastPt.split(',')[0];
+        const firstX = firstPt.split(',')[0];
+        const baseY = height - padY;
+        const areaPoints = `${firstX},${baseY} ${points} ${lastX},${baseY}`;
+
         svg.innerHTML = `
+          <defs>
+            <linearGradient id="equityGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#2ecc71" stop-opacity="0.25"/>
+              <stop offset="100%" stop-color="#2ecc71" stop-opacity="0.0"/>
+            </linearGradient>
+          </defs>
           <line x1="${padX}" y1="${padY}" x2="${width-padX}" y2="${padY}" stroke="#24272b" stroke-dasharray="3 3" />
           <line x1="${padX}" y1="${height/2}" x2="${width-padX}" y2="${height/2}" stroke="#24272b" stroke-dasharray="3 3" />
           <line x1="${padX}" y1="${height-padY}" x2="${width-padX}" y2="${height-padY}" stroke="#24272b" />
 
-          <line x1="${splitX}" y1="${padY}" x2="${splitX}" y2="${height-padY}" stroke="#dfc24d" stroke-dasharray="4 4" opacity="0.6" />
-          <text x="${parseFloat(splitX) - 6}" y="${padY + 12}" fill="#dfc24d" font-size="10" text-anchor="end" font-family="monospace">IN-SAMPLE</text>
-          <text x="${parseFloat(splitX) + 6}" y="${padY + 12}" fill="#dfc24d" font-size="10" text-anchor="start" font-family="monospace">OUT-OF-SAMPLE</text>
+          <text x="${width - padX}" y="${padY + 10}" fill="#868d96" font-size="10" text-anchor="end" font-family="monospace">+18,911 bps</text>
+          <text x="${width - padX}" y="${height/2 - 4}" fill="#868d96" font-size="10" text-anchor="end" font-family="monospace">+9,400 bps</text>
+          <text x="${width - padX}" y="${height - padY - 4}" fill="#868d96" font-size="10" text-anchor="end" font-family="monospace">0 bps</text>
 
+          <line x1="${splitX}" y1="${padY}" x2="${splitX}" y2="${height-padY}" stroke="#dfc24d" stroke-dasharray="4 4" opacity="0.6" />
+          <text x="${parseFloat(splitX) - 8}" y="${padY + 14}" fill="#dfc24d" font-size="10" text-anchor="end" font-family="monospace">IN-SAMPLE (DAY 1-60)</text>
+          <text x="${parseFloat(splitX) + 8}" y="${padY + 14}" fill="#dfc24d" font-size="10" text-anchor="start" font-family="monospace">OUT-OF-SAMPLE (DAY 61-105)</text>
+
+          <polygon fill="url(#equityGrad)" points="${areaPoints}" />
           <polyline fill="none" stroke="#2ecc71" stroke-width="2" points="${points}" />
         `;
       } catch (e) {

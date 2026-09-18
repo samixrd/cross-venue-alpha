@@ -122,16 +122,23 @@ if not venue_index_file.exists():
 venue_index = json.loads(venue_index_file.read_text()) if venue_index_file.exists() else {}
 episodes = run_signal_pipeline(venue_index)
 
-last_eps = episodes[-30:] if len(episodes) > 30 else episodes
-for e in last_eps:
-    e["ts_human"] = datetime.datetime.fromtimestamp(e["t_ms"]/1000, tz=datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
-(API_DIR / "episodes.json").write_text(json.dumps({"episodes": last_eps, "total": len(episodes)}, indent=2))
+if episodes:
+    last_eps = episodes[-30:] if len(episodes) > 30 else episodes
+    for e in last_eps:
+        e["ts_human"] = datetime.datetime.fromtimestamp(e["t_ms"]/1000, tz=datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    (API_DIR / "episodes.json").write_text(json.dumps({"episodes": last_eps, "total": len(episodes)}, indent=2))
 
-curve = build_equity_curve(episodes)
-if len(curve) > 400:
-    step = len(curve) // 400
-    curve = curve[::step]
-(API_DIR / "equity.json").write_text(json.dumps({"curve": curve}, indent=2))
+    curve = build_equity_curve(episodes)
+    if len(curve) > 400:
+        step = len(curve) // 400
+        curve = curve[::step]
+    (API_DIR / "equity.json").write_text(json.dumps({"curve": curve}, indent=2))
+else:
+    print("Warning: episodes was empty, checking existing cached json...")
+    if not (API_DIR / "episodes.json").exists():
+        (API_DIR / "episodes.json").write_text(json.dumps({"episodes": [], "total": 0}, indent=2))
+    if not (API_DIR / "equity.json").exists():
+        (API_DIR / "equity.json").write_text(json.dumps({"curve": []}, indent=2))
 
 print(f"Exported static data to {PUB}:")
 print(f" - status.json ({len(records)} records)")
