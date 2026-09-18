@@ -43,7 +43,11 @@ if __name__=="__main__":
     if a.mode=="root": sys.exit(0 if root_for(a.date) else 1)
     else:
         ok=True
-        for p in sorted(glob.glob(os.path.join(MAN,"root_*.json"))):
+        manifests = sorted(glob.glob(os.path.join(MAN,"root_*.json")))
+        if not manifests:
+            print("[i] No committed root manifests found in verification/. (Scheduled: Sun 17:20 UTC)")
+            sys.exit(0)
+        for p in manifests:
             d=json.load(open(p)); ls=lines_upto(datetime.datetime.fromisoformat(d["cutoff_utc"]))
             m=merkle(ls); good=m==d["root"] and len(ls)==d["record_count"]
             ok&=good; print("VERIFY %s: %s root=%s records=%d"%(os.path.basename(p),"PASS" if good else "FAIL",m[:16],len(ls)))

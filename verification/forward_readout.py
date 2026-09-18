@@ -1,6 +1,6 @@
-"""
+r"""
 VEGA FORWARD READOUT — the pre-declared PASS/FAIL on executable quotes.
-Tape: D:\cross-venue-alpha\tape\*.jsonl (3 venues x 13 symbols, 5-min
+Tape: tape/*.jsonl (3 venues x 13 symbols, 5-min
 weekends / hourly weekdays, hash-chained).
 
 Per hour where all 3 venues have quotes for a symbol:

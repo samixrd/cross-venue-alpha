@@ -2,120 +2,120 @@
   "matrix": [
     {
       "sym": "TSLAUSDT",
-      "bitget": 363.99,
-      "binance": 363.94,
-      "bybit": 364.03,
-      "disloc_bps": 1.19,
-      "bg_spread": 1.1,
-      "last_ts": "2026-09-18 18:43:45"
+      "bitget": 363.88,
+      "binance": 363.87,
+      "bybit": 363.99,
+      "disloc_bps": 2.11,
+      "bg_spread": 0.27,
+      "last_ts": "2026-09-18 19:31:14"
     },
     {
       "sym": "NVDAUSDT",
-      "bitget": 219.56,
-      "binance": 219.53,
-      "bybit": 219.51,
-      "disloc_bps": 1.06,
+      "bitget": 219.75,
+      "binance": 219.75,
+      "bybit": 219.75,
+      "disloc_bps": 0.0,
       "bg_spread": 0.46,
-      "last_ts": "2026-09-18 18:43:45"
+      "last_ts": "2026-09-18 19:31:14"
     },
     {
       "sym": "AAPLUSDT",
-      "bitget": 335.94,
-      "binance": 336.0,
-      "bybit": 335.94,
-      "disloc_bps": 1.04,
+      "bitget": 336.44,
+      "binance": 336.43,
+      "bybit": 336.38,
+      "disloc_bps": 1.19,
       "bg_spread": 0.3,
-      "last_ts": "2026-09-18 18:43:45"
+      "last_ts": "2026-09-18 19:31:14"
     },
     {
       "sym": "AMZNUSDT",
-      "bitget": 253.87,
-      "binance": 253.89,
-      "bybit": 253.99,
-      "disloc_bps": 2.89,
+      "bitget": 254.74,
+      "binance": 254.69,
+      "bybit": 254.72,
+      "disloc_bps": 0.85,
       "bg_spread": 1.18,
-      "last_ts": "2026-09-18 18:43:45"
+      "last_ts": "2026-09-18 19:31:14"
     },
     {
       "sym": "MSFTUSDT",
-      "bitget": 495.59,
-      "binance": 495.62,
-      "bybit": 495.48,
-      "disloc_bps": 1.68,
-      "bg_spread": 0.61,
-      "last_ts": "2026-09-18 18:43:45"
+      "bitget": 495.3,
+      "binance": 495.27,
+      "bybit": 495.27,
+      "disloc_bps": 0.37,
+      "bg_spread": 1.62,
+      "last_ts": "2026-09-18 19:31:14"
     },
     {
       "sym": "GOOGLUSDT",
-      "bitget": 351.45,
-      "binance": 351.44,
-      "bybit": 351.53,
-      "disloc_bps": 1.61,
+      "bitget": 352.08,
+      "binance": 352.1,
+      "bybit": 352.19,
+      "disloc_bps": 1.8,
       "bg_spread": 0.28,
-      "last_ts": "2026-09-18 18:43:45"
+      "last_ts": "2026-09-18 19:31:14"
     },
     {
       "sym": "METAUSDT",
-      "bitget": 673.33,
-      "binance": 673.37,
-      "bybit": 672.99,
-      "disloc_bps": 3.56,
-      "bg_spread": 0.3,
-      "last_ts": "2026-09-18 18:43:45"
+      "bitget": 671.02,
+      "binance": 671.16,
+      "bybit": 670.89,
+      "disloc_bps": 2.06,
+      "bg_spread": 0.45,
+      "last_ts": "2026-09-18 19:31:14"
     },
     {
       "sym": "SPYUSDT",
-      "bitget": 761.0,
-      "binance": 761.15,
-      "bybit": 760.97,
-      "disloc_bps": 1.51,
+      "bitget": 761.24,
+      "binance": 761.43,
+      "bybit": 761.24,
+      "disloc_bps": 1.75,
       "bg_spread": 0.13,
-      "last_ts": "2026-09-18 18:43:45"
+      "last_ts": "2026-09-18 19:31:14"
     },
     {
       "sym": "QQQUSDT",
-      "bitget": 718.98,
-      "binance": 718.93,
-      "bybit": 718.89,
-      "disloc_bps": 0.56,
+      "bitget": 719.85,
+      "binance": 719.74,
+      "bybit": 719.84,
+      "disloc_bps": 0.97,
       "bg_spread": 0.14,
-      "last_ts": "2026-09-18 18:43:45"
+      "last_ts": "2026-09-18 19:31:14"
     },
     {
       "sym": "COINUSDT",
-      "bitget": 194.27,
-      "binance": 194.28,
-      "bybit": 194.28,
-      "disloc_bps": 0.17,
-      "bg_spread": 1.54,
-      "last_ts": "2026-09-18 18:43:45"
+      "bitget": 194.72,
+      "binance": 194.68,
+      "bybit": 194.66,
+      "disloc_bps": 1.97,
+      "bg_spread": 2.57,
+      "last_ts": "2026-09-18 19:31:14"
     },
     {
       "sym": "MSTRUSDT",
-      "bitget": 151.81,
-      "binance": 151.84,
-      "bybit": 151.82,
-      "disloc_bps": 0.77,
-      "bg_spread": 0.66,
-      "last_ts": "2026-09-18 18:43:45"
+      "bitget": 152.91,
+      "binance": 152.93,
+      "bybit": 152.87,
+      "disloc_bps": 1.96,
+      "bg_spread": 0.65,
+      "last_ts": "2026-09-18 19:31:14"
     },
     {
       "sym": "HOODUSDT",
-      "bitget": 119.44,
-      "binance": 119.42,
-      "bybit": 119.44,
-      "disloc_bps": 1.12,
-      "bg_spread": 2.51,
-      "last_ts": "2026-09-18 18:43:45"
+      "bitget": 119.6,
+      "binance": 119.62,
+      "bybit": 119.66,
+      "disloc_bps": 2.37,
+      "bg_spread": 1.67,
+      "last_ts": "2026-09-18 19:31:14"
     },
     {
       "sym": "CRCLUSDT",
-      "bitget": 91.13,
-      "binance": 91.13,
-      "bybit": 91.16,
-      "disloc_bps": 2.01,
-      "bg_spread": 2.19,
-      "last_ts": "2026-09-18 18:43:45"
+      "bitget": 91.64,
+      "binance": 91.62,
+      "bybit": 91.62,
+      "disloc_bps": 1.46,
+      "bg_spread": 2.18,
+      "last_ts": "2026-09-18 19:31:14"
     }
   ]
 }

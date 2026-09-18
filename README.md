@@ -34,7 +34,7 @@ existed.
 | **Annualized Sortino** | **40.35** | **31.69** | **36.75** | Downside deviation risk |
 | **Win Rate (%)** | **55.2%** | **49.7%** | **52.9%** | Net of 24 bps fees + funding |
 | **Mean Net Return** | **+16.0 bps** | **+6.6 bps** | **+12.1 bps** | Per 6h episode |
-| **Cumulative Net PnL** | **+14,608 bps** | **+4,303 bps** | **+18,949 bps** | Total realized return |
+| **Cumulative Net PnL** | **+14,619 bps** | **+4,330 bps** | **+18,949 bps** | Total realized return |
 | **Max Drawdown (bps)** | -826.6 bps | -928.4 bps | **-928.4 bps** | Peak-to-trough |
 | **OOS Sharpe Decay Ratio**| — | — | **0.64** | **PASSED** (Handbook alert: $< 0.50$) |
 

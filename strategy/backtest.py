@@ -1,10 +1,11 @@
 """sanity: frozen signal+execution reproduce the round-8/9 mid numbers on venue_index."""
-import json, sys, math, datetime
-sys.path.insert(0, r"D:\cross-venue-alpha")
-sys.path.insert(0, r"D:\cross-venue-alpha\strategy")
+import json, sys, math, datetime, os
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, ROOT_DIR)
+sys.path.insert(0, os.path.join(ROOT_DIR, "strategy"))
 from strategy.signal import episodes_for
 from strategy.execution import pair_pnl
-IDX=json.load(open(r"D:\cross-venue-alpha\data\venue_index.json"))
+IDX = json.load(open(os.path.join(ROOT_DIR, "data", "venue_index.json"), encoding="utf-8"))
 # signal.episodes_for expects bars keyed by hour ms; venue_index bars keyed by bar-open ms (already hourly)
 for sym in ["TSLAUSDT","NVDAUSDT","AAPLUSDT","SPYUSDT"]:
     eps,st=episodes_for(IDX[sym])

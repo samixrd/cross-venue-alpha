@@ -7,12 +7,14 @@ Output: verification/snapshots/all_weeks.md (+ week-vs-week "what changed").
 """
 import json, math, datetime, sys, os
 from collections import defaultdict
-sys.path.insert(0, r"D:\cross-venue-alpha")
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, ROOT_DIR)
 from strategy.signal import VEN, Z_TRIGGER, HOLD_H, LAM, WARMUP
 
-IDX=json.load(open(r"D:\cross-venue-alpha\data\venue_index.json"))
-OUTDIR=r"D:\cross-venue-alpha\verification\snapshots"; os.makedirs(OUTDIR,exist_ok=True)
-H=3600000; FEE=24.0
+IDX = json.load(open(os.path.join(ROOT_DIR, "data", "venue_index.json"), encoding="utf-8"))
+OUTDIR = os.path.join(ROOT_DIR, "verification", "snapshots")
+os.makedirs(OUTDIR, exist_ok=True)
+H = 3600000; FEE = 24.0
 
 def wk(ms):
     d=datetime.datetime(1970,1,1)+datetime.timedelta(milliseconds=ms)

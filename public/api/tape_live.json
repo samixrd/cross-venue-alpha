@@ -1,6 +1,357 @@
 {
   "records": [
     {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "TSLAUSDT",
+      "venue": "bybit",
+      "bid": 363.95,
+      "ask": 364.02,
+      "spread_bps": 1.92,
+      "funding_rate": 0.0
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "SPYUSDT",
+      "venue": "bybit",
+      "bid": 761.23,
+      "ask": 761.24,
+      "spread_bps": 0.13,
+      "funding_rate": 0.0
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "QQQUSDT",
+      "venue": "bybit",
+      "bid": 719.83,
+      "ask": 719.84,
+      "spread_bps": 0.14,
+      "funding_rate": 0.0
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "NVDAUSDT",
+      "venue": "bybit",
+      "bid": 219.75,
+      "ask": 219.76,
+      "spread_bps": 0.46,
+      "funding_rate": 0.0
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "MSTRUSDT",
+      "venue": "bybit",
+      "bid": 152.84,
+      "ask": 152.9,
+      "spread_bps": 3.92,
+      "funding_rate": 0.0
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "MSFTUSDT",
+      "venue": "bybit",
+      "bid": 495.26,
+      "ask": 495.28,
+      "spread_bps": 0.4,
+      "funding_rate": 0.0
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "METAUSDT",
+      "venue": "bybit",
+      "bid": 670.79,
+      "ask": 670.99,
+      "spread_bps": 2.98,
+      "funding_rate": 0.0
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "HOODUSDT",
+      "venue": "bybit",
+      "bid": 119.64,
+      "ask": 119.67,
+      "spread_bps": 2.51,
+      "funding_rate": 7.832e-05
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "GOOGLUSDT",
+      "venue": "bybit",
+      "bid": 352.18,
+      "ask": 352.19,
+      "spread_bps": 0.28,
+      "funding_rate": 7.938e-05
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "CRCLUSDT",
+      "venue": "bybit",
+      "bid": 91.61,
+      "ask": 91.64,
+      "spread_bps": 3.27,
+      "funding_rate": 0.0
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "COINUSDT",
+      "venue": "bybit",
+      "bid": 194.61,
+      "ask": 194.7,
+      "spread_bps": 4.62,
+      "funding_rate": 0.0
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "AMZNUSDT",
+      "venue": "bybit",
+      "bid": 254.65,
+      "ask": 254.79,
+      "spread_bps": 5.5,
+      "funding_rate": 7.454e-05
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "AAPLUSDT",
+      "venue": "bybit",
+      "bid": 336.37,
+      "ask": 336.38,
+      "spread_bps": 0.3,
+      "funding_rate": 0.0
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "MSFTUSDT",
+      "venue": "binance",
+      "bid": 495.27,
+      "ask": 495.28,
+      "spread_bps": 0.2,
+      "funding_rate": 0.0
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "AAPLUSDT",
+      "venue": "binance",
+      "bid": 336.42,
+      "ask": 336.43,
+      "spread_bps": 0.3,
+      "funding_rate": 0.0
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "SPYUSDT",
+      "venue": "binance",
+      "bid": 761.43,
+      "ask": 761.44,
+      "spread_bps": 0.13,
+      "funding_rate": 0.00012388
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "QQQUSDT",
+      "venue": "binance",
+      "bid": 719.73,
+      "ask": 719.74,
+      "spread_bps": 0.14,
+      "funding_rate": 0.00015918
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "GOOGLUSDT",
+      "venue": "binance",
+      "bid": 352.09,
+      "ask": 352.1,
+      "spread_bps": 0.28,
+      "funding_rate": 0.00021347
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "NVDAUSDT",
+      "venue": "binance",
+      "bid": 219.75,
+      "ask": 219.76,
+      "spread_bps": 0.46,
+      "funding_rate": 9.771e-05
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "METAUSDT",
+      "venue": "binance",
+      "bid": 671.16,
+      "ask": 671.17,
+      "spread_bps": 0.15,
+      "funding_rate": 0.0
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "COINUSDT",
+      "venue": "binance",
+      "bid": 194.66,
+      "ask": 194.7,
+      "spread_bps": 2.05,
+      "funding_rate": 0.0
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "CRCLUSDT",
+      "venue": "binance",
+      "bid": 91.61,
+      "ask": 91.62,
+      "spread_bps": 1.09,
+      "funding_rate": 0.0
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "AMZNUSDT",
+      "venue": "binance",
+      "bid": 254.69,
+      "ask": 254.7,
+      "spread_bps": 0.39,
+      "funding_rate": 0.00012097
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "MSTRUSDT",
+      "venue": "binance",
+      "bid": 152.92,
+      "ask": 152.93,
+      "spread_bps": 0.65,
+      "funding_rate": 0.0
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "HOODUSDT",
+      "venue": "binance",
+      "bid": 119.61,
+      "ask": 119.64,
+      "spread_bps": 2.51,
+      "funding_rate": 0.0
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "TSLAUSDT",
+      "venue": "binance",
+      "bid": 363.86,
+      "ask": 363.87,
+      "spread_bps": 0.27,
+      "funding_rate": 0.00014636
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "SPYUSDT",
+      "venue": "bitget",
+      "bid": 761.23,
+      "ask": 761.24,
+      "spread_bps": 0.13,
+      "funding_rate": 0.0
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "QQQUSDT",
+      "venue": "bitget",
+      "bid": 719.84,
+      "ask": 719.85,
+      "spread_bps": 0.14,
+      "funding_rate": 0.000335
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "MSFTUSDT",
+      "venue": "bitget",
+      "bid": 495.26,
+      "ask": 495.34,
+      "spread_bps": 1.62,
+      "funding_rate": 0.0
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "HOODUSDT",
+      "venue": "bitget",
+      "bid": 119.59,
+      "ask": 119.61,
+      "spread_bps": 1.67,
+      "funding_rate": 0.0
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "COINUSDT",
+      "venue": "bitget",
+      "bid": 194.7,
+      "ask": 194.75,
+      "spread_bps": 2.57,
+      "funding_rate": 0.0
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "MSTRUSDT",
+      "venue": "bitget",
+      "bid": 152.9,
+      "ask": 152.91,
+      "spread_bps": 0.65,
+      "funding_rate": 0.0
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "METAUSDT",
+      "venue": "bitget",
+      "bid": 671.01,
+      "ask": 671.04,
+      "spread_bps": 0.45,
+      "funding_rate": 0.0
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "AMZNUSDT",
+      "venue": "bitget",
+      "bid": 254.72,
+      "ask": 254.75,
+      "spread_bps": 1.18,
+      "funding_rate": 0.000177
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "AAPLUSDT",
+      "venue": "bitget",
+      "bid": 336.44,
+      "ask": 336.45,
+      "spread_bps": 0.3,
+      "funding_rate": 0.0
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "GOOGLUSDT",
+      "venue": "bitget",
+      "bid": 352.08,
+      "ask": 352.09,
+      "spread_bps": 0.28,
+      "funding_rate": 0.000154
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "NVDAUSDT",
+      "venue": "bitget",
+      "bid": 219.75,
+      "ask": 219.76,
+      "spread_bps": 0.46,
+      "funding_rate": 0.000325
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "CRCLUSDT",
+      "venue": "bitget",
+      "bid": 91.63,
+      "ask": 91.65,
+      "spread_bps": 2.18,
+      "funding_rate": 0.0
+    },
+    {
+      "ts": "2026-09-18 19:31:14",
+      "sym": "TSLAUSDT",
+      "venue": "bitget",
+      "bid": 363.87,
+      "ask": 363.88,
+      "spread_bps": 0.27,
+      "funding_rate": 0.000345
+    },
+    {
       "ts": "2026-09-18 18:43:45",
       "sym": "TSLAUSDT",
       "venue": "bybit",
@@ -188,358 +539,7 @@
       "ask": 194.29,
       "spread_bps": 1.03,
       "funding_rate": 0.0
-    },
-    {
-      "ts": "2026-09-18 18:43:45",
-      "sym": "CRCLUSDT",
-      "venue": "binance",
-      "bid": 91.13,
-      "ask": 91.14,
-      "spread_bps": 1.1,
-      "funding_rate": 0.0
-    },
-    {
-      "ts": "2026-09-18 18:43:45",
-      "sym": "AMZNUSDT",
-      "venue": "binance",
-      "bid": 253.89,
-      "ask": 253.9,
-      "spread_bps": 0.39,
-      "funding_rate": 0.00016212
-    },
-    {
-      "ts": "2026-09-18 18:43:45",
-      "sym": "MSTRUSDT",
-      "venue": "binance",
-      "bid": 151.83,
-      "ask": 151.84,
-      "spread_bps": 0.66,
-      "funding_rate": 0.0
-    },
-    {
-      "ts": "2026-09-18 18:43:45",
-      "sym": "HOODUSDT",
-      "venue": "binance",
-      "bid": 119.41,
-      "ask": 119.43,
-      "spread_bps": 1.67,
-      "funding_rate": 0.0
-    },
-    {
-      "ts": "2026-09-18 18:43:45",
-      "sym": "TSLAUSDT",
-      "venue": "binance",
-      "bid": 363.94,
-      "ask": 363.95,
-      "spread_bps": 0.27,
-      "funding_rate": 0.00016303
-    },
-    {
-      "ts": "2026-09-18 18:43:45",
-      "sym": "SPYUSDT",
-      "venue": "bitget",
-      "bid": 760.99,
-      "ask": 761.0,
-      "spread_bps": 0.13,
-      "funding_rate": 0.0
-    },
-    {
-      "ts": "2026-09-18 18:43:45",
-      "sym": "QQQUSDT",
-      "venue": "bitget",
-      "bid": 718.97,
-      "ask": 718.98,
-      "spread_bps": 0.14,
-      "funding_rate": 0.00033
-    },
-    {
-      "ts": "2026-09-18 18:43:45",
-      "sym": "MSFTUSDT",
-      "venue": "bitget",
-      "bid": 495.57,
-      "ask": 495.6,
-      "spread_bps": 0.61,
-      "funding_rate": 0.0
-    },
-    {
-      "ts": "2026-09-18 18:43:45",
-      "sym": "HOODUSDT",
-      "venue": "bitget",
-      "bid": 119.42,
-      "ask": 119.45,
-      "spread_bps": 2.51,
-      "funding_rate": 0.0
-    },
-    {
-      "ts": "2026-09-18 18:43:45",
-      "sym": "COINUSDT",
-      "venue": "bitget",
-      "bid": 194.26,
-      "ask": 194.29,
-      "spread_bps": 1.54,
-      "funding_rate": 0.0
-    },
-    {
-      "ts": "2026-09-18 18:43:45",
-      "sym": "MSTRUSDT",
-      "venue": "bitget",
-      "bid": 151.81,
-      "ask": 151.82,
-      "spread_bps": 0.66,
-      "funding_rate": 0.0
-    },
-    {
-      "ts": "2026-09-18 18:43:45",
-      "sym": "METAUSDT",
-      "venue": "bitget",
-      "bid": 673.32,
-      "ask": 673.34,
-      "spread_bps": 0.3,
-      "funding_rate": 0.0
-    },
-    {
-      "ts": "2026-09-18 18:43:45",
-      "sym": "AMZNUSDT",
-      "venue": "bitget",
-      "bid": 253.85,
-      "ask": 253.88,
-      "spread_bps": 1.18,
-      "funding_rate": 0.00021
-    },
-    {
-      "ts": "2026-09-18 18:43:45",
-      "sym": "AAPLUSDT",
-      "venue": "bitget",
-      "bid": 335.94,
-      "ask": 335.95,
-      "spread_bps": 0.3,
-      "funding_rate": 0.0
-    },
-    {
-      "ts": "2026-09-18 18:43:45",
-      "sym": "GOOGLUSDT",
-      "venue": "bitget",
-      "bid": 351.45,
-      "ask": 351.46,
-      "spread_bps": 0.28,
-      "funding_rate": 0.000151
-    },
-    {
-      "ts": "2026-09-18 18:43:45",
-      "sym": "NVDAUSDT",
-      "venue": "bitget",
-      "bid": 219.55,
-      "ask": 219.56,
-      "spread_bps": 0.46,
-      "funding_rate": 0.000323
-    },
-    {
-      "ts": "2026-09-18 18:43:45",
-      "sym": "CRCLUSDT",
-      "venue": "bitget",
-      "bid": 91.12,
-      "ask": 91.14,
-      "spread_bps": 2.19,
-      "funding_rate": 0.0
-    },
-    {
-      "ts": "2026-09-18 18:43:45",
-      "sym": "TSLAUSDT",
-      "venue": "bitget",
-      "bid": 363.97,
-      "ask": 364.01,
-      "spread_bps": 1.1,
-      "funding_rate": 0.000332
-    },
-    {
-      "ts": "2026-09-18 18:39:29",
-      "sym": "TSLAUSDT",
-      "venue": "bybit",
-      "bid": 364.35,
-      "ask": 364.4,
-      "spread_bps": 1.37,
-      "funding_rate": 0.0
-    },
-    {
-      "ts": "2026-09-18 18:39:29",
-      "sym": "SPYUSDT",
-      "venue": "bybit",
-      "bid": 760.83,
-      "ask": 760.86,
-      "spread_bps": 0.39,
-      "funding_rate": 0.0
-    },
-    {
-      "ts": "2026-09-18 18:39:29",
-      "sym": "QQQUSDT",
-      "venue": "bybit",
-      "bid": 718.71,
-      "ask": 718.72,
-      "spread_bps": 0.14,
-      "funding_rate": 0.0
-    },
-    {
-      "ts": "2026-09-18 18:39:29",
-      "sym": "NVDAUSDT",
-      "venue": "bybit",
-      "bid": 219.61,
-      "ask": 219.62,
-      "spread_bps": 0.46,
-      "funding_rate": 0.0
-    },
-    {
-      "ts": "2026-09-18 18:39:29",
-      "sym": "MSTRUSDT",
-      "venue": "bybit",
-      "bid": 152.0,
-      "ask": 152.03,
-      "spread_bps": 1.97,
-      "funding_rate": 0.0
-    },
-    {
-      "ts": "2026-09-18 18:39:29",
-      "sym": "MSFTUSDT",
-      "venue": "bybit",
-      "bid": 495.37,
-      "ask": 495.48,
-      "spread_bps": 2.22,
-      "funding_rate": 0.0
-    },
-    {
-      "ts": "2026-09-18 18:39:29",
-      "sym": "METAUSDT",
-      "venue": "bybit",
-      "bid": 671.74,
-      "ask": 671.99,
-      "spread_bps": 3.72,
-      "funding_rate": 0.0
-    },
-    {
-      "ts": "2026-09-18 18:39:29",
-      "sym": "HOODUSDT",
-      "venue": "bybit",
-      "bid": 119.39,
-      "ask": 119.43,
-      "spread_bps": 3.35,
-      "funding_rate": 9.229e-05
-    },
-    {
-      "ts": "2026-09-18 18:39:29",
-      "sym": "GOOGLUSDT",
-      "venue": "bybit",
-      "bid": 351.4,
-      "ask": 351.42,
-      "spread_bps": 0.57,
-      "funding_rate": 0.00013556
-    },
-    {
-      "ts": "2026-09-18 18:39:29",
-      "sym": "CRCLUSDT",
-      "venue": "bybit",
-      "bid": 91.22,
-      "ask": 91.24,
-      "spread_bps": 2.19,
-      "funding_rate": 0.0
-    },
-    {
-      "ts": "2026-09-18 18:39:29",
-      "sym": "COINUSDT",
-      "venue": "bybit",
-      "bid": 194.34,
-      "ask": 194.5,
-      "spread_bps": 8.23,
-      "funding_rate": 0.0
-    },
-    {
-      "ts": "2026-09-18 18:39:29",
-      "sym": "AMZNUSDT",
-      "venue": "bybit",
-      "bid": 253.57,
-      "ask": 253.64,
-      "spread_bps": 2.76,
-      "funding_rate": 0.00017267
-    },
-    {
-      "ts": "2026-09-18 18:39:29",
-      "sym": "AAPLUSDT",
-      "venue": "bybit",
-      "bid": 335.87,
-      "ask": 335.88,
-      "spread_bps": 0.3,
-      "funding_rate": 0.0
-    },
-    {
-      "ts": "2026-09-18 18:39:29",
-      "sym": "MSFTUSDT",
-      "venue": "binance",
-      "bid": 495.6,
-      "ask": 495.61,
-      "spread_bps": 0.2,
-      "funding_rate": 0.0
-    },
-    {
-      "ts": "2026-09-18 18:39:29",
-      "sym": "AAPLUSDT",
-      "venue": "binance",
-      "bid": 335.88,
-      "ask": 335.89,
-      "spread_bps": 0.3,
-      "funding_rate": 0.0
-    },
-    {
-      "ts": "2026-09-18 18:39:29",
-      "sym": "SPYUSDT",
-      "venue": "binance",
-      "bid": 761.11,
-      "ask": 761.12,
-      "spread_bps": 0.13,
-      "funding_rate": 0.00014327
-    },
-    {
-      "ts": "2026-09-18 18:39:29",
-      "sym": "QQQUSDT",
-      "venue": "binance",
-      "bid": 718.75,
-      "ask": 718.76,
-      "spread_bps": 0.14,
-      "funding_rate": 0.00015821
-    },
-    {
-      "ts": "2026-09-18 18:39:29",
-      "sym": "GOOGLUSDT",
-      "venue": "binance",
-      "bid": 351.36,
-      "ask": 351.37,
-      "spread_bps": 0.28,
-      "funding_rate": 0.00022892
-    },
-    {
-      "ts": "2026-09-18 18:39:29",
-      "sym": "NVDAUSDT",
-      "venue": "binance",
-      "bid": 219.63,
-      "ask": 219.64,
-      "spread_bps": 0.46,
-      "funding_rate": 0.0001205
-    },
-    {
-      "ts": "2026-09-18 18:39:29",
-      "sym": "METAUSDT",
-      "venue": "binance",
-      "bid": 672.27,
-      "ask": 672.28,
-      "spread_bps": 0.15,
-      "funding_rate": 0.0
-    },
-    {
-      "ts": "2026-09-18 18:39:29",
-      "sym": "COINUSDT",
-      "venue": "binance",
-      "bid": 194.37,
-      "ask": 194.4,
-      "spread_bps": 1.54,
-      "funding_rate": 0.0
     }
   ],
-  "total": 468
+  "total": 507
 }

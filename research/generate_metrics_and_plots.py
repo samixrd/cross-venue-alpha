@@ -1,4 +1,4 @@
-﻿"""
+"""
 Generate Institutional Quantitative Metrics & High-Resolution Visual Plots
 for VEGA 105-Day Multi-Venue Empirical Backtest.
 Outputs:
@@ -12,8 +12,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
-DATA_PATH = r"D:\cross-venue-alpha\data\venue_index.json"
-DOCS_DIR = r"D:\cross-venue-alpha\docs"
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_PATH = os.path.join(ROOT_DIR, "data", "venue_index.json")
+DOCS_DIR = os.path.join(ROOT_DIR, "docs")
 os.makedirs(DOCS_DIR, exist_ok=True)
 
 with open(DATA_PATH, "r", encoding="utf-8") as f:
