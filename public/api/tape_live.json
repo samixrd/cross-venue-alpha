@@ -1,0 +1,185 @@
+{
+  "records": [
+    {
+      "ts": "2026-09-18 17:14:56",
+      "sym": "SPYUSDT",
+      "venue": "bitget",
+      "bid": 759.71,
+      "ask": 759.72,
+      "spread_bps": 0.13,
+      "funding_rate": 0.0
+    },
+    {
+      "ts": "2026-09-18 17:14:56",
+      "sym": "QQQUSDT",
+      "venue": "bitget",
+      "bid": 717.86,
+      "ask": 717.87,
+      "spread_bps": 0.14,
+      "funding_rate": 0.000274
+    },
+    {
+      "ts": "2026-09-18 17:14:56",
+      "sym": "MSFTUSDT",
+      "venue": "bitget",
+      "bid": 494.71,
+      "ask": 494.74,
+      "spread_bps": 0.61,
+      "funding_rate": 3.5e-05
+    },
+    {
+      "ts": "2026-09-18 17:14:56",
+      "sym": "HOODUSDT",
+      "venue": "bitget",
+      "bid": 119.66,
+      "ask": 119.71,
+      "spread_bps": 4.18,
+      "funding_rate": 0.0
+    },
+    {
+      "ts": "2026-09-18 17:14:56",
+      "sym": "COINUSDT",
+      "venue": "bitget",
+      "bid": 194.79,
+      "ask": 194.85,
+      "spread_bps": 3.08,
+      "funding_rate": 0.0
+    },
+    {
+      "ts": "2026-09-18 17:14:56",
+      "sym": "MSTRUSDT",
+      "venue": "bitget",
+      "bid": 150.37,
+      "ask": 150.38,
+      "spread_bps": 0.67,
+      "funding_rate": 0.0
+    },
+    {
+      "ts": "2026-09-18 17:14:56",
+      "sym": "METAUSDT",
+      "venue": "bitget",
+      "bid": 672.23,
+      "ask": 672.28,
+      "spread_bps": 0.74,
+      "funding_rate": 0.0
+    },
+    {
+      "ts": "2026-09-18 17:14:56",
+      "sym": "AMZNUSDT",
+      "venue": "bitget",
+      "bid": 253.39,
+      "ask": 253.43,
+      "spread_bps": 1.58,
+      "funding_rate": 0.000191
+    },
+    {
+      "ts": "2026-09-18 17:14:56",
+      "sym": "AAPLUSDT",
+      "venue": "bitget",
+      "bid": 335.02,
+      "ask": 335.03,
+      "spread_bps": 0.3,
+      "funding_rate": 0.0
+    },
+    {
+      "ts": "2026-09-18 17:14:56",
+      "sym": "GOOGLUSDT",
+      "venue": "bitget",
+      "bid": 349.92,
+      "ask": 349.93,
+      "spread_bps": 0.29,
+      "funding_rate": 0.000117
+    },
+    {
+      "ts": "2026-09-18 17:14:56",
+      "sym": "NVDAUSDT",
+      "venue": "bitget",
+      "bid": 220.21,
+      "ask": 220.22,
+      "spread_bps": 0.45,
+      "funding_rate": 0.000301
+    },
+    {
+      "ts": "2026-09-18 17:14:56",
+      "sym": "CRCLUSDT",
+      "venue": "bitget",
+      "bid": 91.25,
+      "ask": 91.28,
+      "spread_bps": 3.29,
+      "funding_rate": 0.0
+    },
+    {
+      "ts": "2026-09-18 17:14:56",
+      "sym": "TSLAUSDT",
+      "venue": "bitget",
+      "bid": 363.16,
+      "ask": 363.17,
+      "spread_bps": 0.28,
+      "funding_rate": 0.000294
+    },
+    {
+      "ts": "2026-09-18 13:45:13",
+      "sym": "SPYUSDT",
+      "venue": "bitget",
+      "bid": 761.59,
+      "ask": 761.6,
+      "spread_bps": 0.13,
+      "funding_rate": 0.0
+    },
+    {
+      "ts": "2026-09-18 13:45:13",
+      "sym": "QQQUSDT",
+      "venue": "bitget",
+      "bid": 719.73,
+      "ask": 719.74,
+      "spread_bps": 0.14,
+      "funding_rate": 1e-06
+    },
+    {
+      "ts": "2026-09-18 13:45:13",
+      "sym": "MSFTUSDT",
+      "venue": "bitget",
+      "bid": 494.23,
+      "ask": 494.27,
+      "spread_bps": 0.81,
+      "funding_rate": 0.0
+    },
+    {
+      "ts": "2026-09-18 13:45:13",
+      "sym": "HOODUSDT",
+      "venue": "bitget",
+      "bid": 113.48,
+      "ask": 113.55,
+      "spread_bps": 6.17,
+      "funding_rate": 0.0
+    },
+    {
+      "ts": "2026-09-18 13:45:13",
+      "sym": "COINUSDT",
+      "venue": "bitget",
+      "bid": 182.04,
+      "ask": 182.1,
+      "spread_bps": 3.3,
+      "funding_rate": 9.1e-05
+    },
+    {
+      "ts": "2026-09-18 13:45:13",
+      "sym": "MSTRUSDT",
+      "venue": "bitget",
+      "bid": 141.55,
+      "ask": 141.56,
+      "spread_bps": 0.71,
+      "funding_rate": 0.000102
+    },
+    {
+      "ts": "2026-09-18 13:45:13",
+      "sym": "METAUSDT",
+      "venue": "bitget",
+      "bid": 673.87,
+      "ask": 673.95,
+      "spread_bps": 1.19,
+      "funding_rate": 0.0
+    }
+  ],
+  "total": 351
+}

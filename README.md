@@ -2,6 +2,7 @@
 **Flagship · Alpha Factory → Arbitrage · Bitget AI Hackathon S2**
 
 [![VEGA Tape Collector](https://github.com/samixrd/cross-venue-alpha/actions/workflows/collector.yml/badge.svg)](https://github.com/samixrd/cross-venue-alpha/actions/workflows/collector.yml)
+[![Live Terminal](https://img.shields.io/badge/terminal-live%20dashboard-blue)](https://samixrd.github.io/cross-venue-alpha/)
 [![Commits by VEGA-Bot](https://img.shields.io/github/commit-activity/d/samixrd/cross-venue-alpha?label=tape%20commits%2Fday&color=brightgreen)](https://github.com/samixrd/cross-venue-alpha/commits/master)
 [![Tape Files](https://img.shields.io/badge/tape-live%20collecting-brightgreen)](https://github.com/samixrd/cross-venue-alpha/tree/master/tape)
 
@@ -132,16 +133,17 @@ VEGA is architected for turnkey deployment with Bitget's full tool stack:
 ## 🖥️ Live Quantitative Terminal & Web Dashboard
 
 VEGA includes a standalone, zero-dependency quantitative terminal dashboard designed for real-time monitoring and verification:
-* **Real-time Live Sync:** Polls every 5s for live quotes, active dislocation signals, and cryptographic hash chain integrity.
+* **🌐 Public Web Deployment:** [https://samixrd.github.io/cross-venue-alpha/](https://samixrd.github.io/cross-venue-alpha/)
+* **Real-time Live Sync:** Polls continuously for live quotes, active dislocation signals, and cryptographic hash chain integrity.
 * **Interactive Visuals:** Dynamic cumulative equity curve with walk-forward split and drawdown analysis.
-* **Zero External Build Setup:** Pure native HTML5/CSS/JavaScript with FastAPI backend (`python dashboard/server.py`).
+* **Local Backend Option:** Pure native HTML5/CSS/JavaScript with FastAPI backend (`python dashboard/server.py`).
 
 ```bash
-# Launch the dashboard:
+# Launch the local dashboard:
 python dashboard/server.py
 
 # Access the interface:
-# Open http://localhost:8000 in your browser
+# Open http://localhost:8000 in your browser (or visit https://samixrd.github.io/cross-venue-alpha/)
 ```
 
 ---

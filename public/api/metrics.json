@@ -1,0 +1,34 @@
+{
+  "in_sample": {
+    "name": "In-Sample (Day 1\u201360)",
+    "n": 913,
+    "win_rate": 55.202628696604606,
+    "mean_net_bps": 16.0117679577894,
+    "total_net_bps": 14618.744145461722,
+    "sharpe": 20.694500838111303,
+    "sortino": 40.347279173227854,
+    "max_dd_bps": -826.6275120112732
+  },
+  "out_of_sample": {
+    "name": "Out-of-Sample (Day 61\u2013105)",
+    "n": 652,
+    "win_rate": 49.693251533742334,
+    "mean_net_bps": 6.641223930590481,
+    "total_net_bps": 4330.078002744994,
+    "sharpe": 13.275296505017996,
+    "sortino": 31.688188339019607,
+    "max_dd_bps": -928.3890151549496
+  },
+  "full_period": {
+    "name": "Full 105-Day Period",
+    "n": 1565,
+    "win_rate": 52.9073482428115,
+    "mean_net_bps": 12.107873577128892,
+    "total_net_bps": 18948.822148206717,
+    "sharpe": 17.834988351795023,
+    "sortino": 36.75044221494603,
+    "max_dd_bps": -928.3890151549494
+  },
+  "sharpe_decay_ratio": 0.64,
+  "generated_utc": "2026-09-16T19:24:55.969748+00:00"
+}
