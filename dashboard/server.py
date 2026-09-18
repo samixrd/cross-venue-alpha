@@ -65,32 +65,102 @@ def is_weekend_now():
     wd, h = n.weekday(), n.hour
     return (wd == 4) or (wd in (5, 6)) or (wd == 0 and h <= 21)
 
-def run_signal_pipeline(venue_index):
-    try:
-        from strategy.signal import episodes_for, VEN
-        all_eps = []
-        for sym, sym_data in venue_index.items():
-            if sym == "SPY": continue
-            if not all(v in sym_data for v in VEN): continue
-            eps, _ = episodes_for(sym_data)
-            for e in eps: e["sym"] = sym
-            all_eps.extend(eps)
-        all_eps.sort(key=lambda x: x["t_ms"])
-        return all_eps
-    except Exception as ex:
-        return []
+def compute_empirical_episodes_and_curve(IDX):
+    VEN = ["bitget", "binance", "bybit"]
+    LAM = 0.97
+    Z_TRIGGER = 2.0
+    HOLD_H = 6
+    WARMUP = 24
+    FEE_BPS = 24.0
+    H = 3600000
 
-def build_equity_curve(episodes):
-    from strategy.execution import FEE_BPS
-    cumulative = 0.0
-    curve = []
-    for ep in episodes:
-        z_spread = abs(ep.get("z_rich", 0)) + abs(ep.get("z_cheap", 0))
-        gross = z_spread * 3.0
-        net = gross - FEE_BPS
-        cumulative += net
-        curve.append({"t_ms": ep["t_ms"], "cum_bps": round(cumulative, 1), "net_bps": round(net, 1), "sym": ep.get("sym","")})
-    return curve
+    def carry_forward(ts_data, t0, nH):
+        f = {int(k): v for k, v in ts_data.items()}
+        ks = sorted(f); out = 0.0
+        t1 = t0 + nH * H
+        import bisect
+        i = bisect.bisect_right(ks, t0); j = bisect.bisect_right(ks, t1)
+        for k in ks[i:j]: out += f[k]
+        return out
+
+    all_episodes = []
+    for sym in IDX.keys():
+        sets = [set(map(int, IDX[sym][v]["bars"].keys())) for v in VEN]
+        common_hrs = sorted(set.intersection(*sets))
+        if len(common_hrs) < WARMUP + HOLD_H + 2: continue
+
+        rows = []
+        for k in common_hrs:
+            try: mids = {v: math.log(float(IDX[sym][v]["bars"][str(k)])) for v in VEN}
+            except Exception: continue
+            F = sum(mids.values()) / 3
+            D = {v: mids[v] - F for v in VEN}
+            cm = {v: carry_forward(IDX[sym][v]["fund"], k, HOLD_H) for v in VEN}
+            cbar = sum(cm.values()) / 3
+            Dn = {v: D[v] - (cm[v] - cbar) for v in VEN}
+            rows.append((k, D, Dn, mids))
+
+        sd = {v: 0.0 for v in VEN}
+        prev = {v: None for v in VEN}
+        Z = []
+        for k, D, Dn, mids in rows:
+            zs = {}
+            for v in VEN:
+                if prev[v] is not None:
+                    dd = Dn[v] - prev[v]
+                    sd[v] = LAM * sd[v] + (1 - LAM) * dd * dd
+                zs[v] = Dn[v] / math.sqrt(sd[v]) if sd[v] > 0 else 0.0
+                prev[v] = Dn[v]
+            Z.append(zs)
+
+        last_t = -10**18
+        for i in range(WARMUP, len(rows)):
+            t_entry = rows[i][0]
+            zs = Z[i]
+            rich = max(VEN, key=lambda v: zs[v])
+            cheap = min(VEN, key=lambda v: zs[v])
+            if abs(zs[rich]) < Z_TRIGGER and abs(zs[cheap]) < Z_TRIGGER: continue
+            if t_entry - last_t < HOLD_H * H: continue
+
+            t_exit = t_entry + HOLD_H * H
+            exit_row = None
+            for j in range(i + 1, len(rows)):
+                if rows[j][0] == t_exit:
+                    exit_row = rows[j]; break
+            if exit_row is None: continue
+
+            last_t = t_entry
+            e_mids = rows[i][3]; x_mids = exit_row[3]
+            gross_bps = ((e_mids[rich] - x_mids[rich]) + (x_mids[cheap] - e_mids[cheap])) / 2 * 1e4
+            rich_fund = carry_forward(IDX[sym][rich]["fund"], t_entry, HOLD_H)
+            cheap_fund = carry_forward(IDX[sym][cheap]["fund"], t_entry, HOLD_H)
+            fund_bps = (rich_fund - cheap_fund) * 1e4
+            net_bps = gross_bps - FEE_BPS - fund_bps
+
+            all_episodes.append({
+                "t_ms": t_entry, "sym": sym, "rich": rich, "cheap": cheap,
+                "z_rich": round(zs[rich], 2), "z_cheap": round(zs[cheap], 2),
+                "gross_bps": round(gross_bps, 2), "funding_bps": round(fund_bps, 2),
+                "net_bps": round(net_bps, 2),
+                "ts_human": datetime.datetime.fromtimestamp(t_entry/1000, tz=datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+            })
+
+    all_episodes.sort(key=lambda x: x["t_ms"])
+    cum = 0.0
+    real_curve = []
+    for e in all_episodes:
+        cum += e["net_bps"]
+        real_curve.append({
+            "t_ms": e["t_ms"], "cum_bps": round(cum, 1), "net_bps": e["net_bps"], "sym": e["sym"],
+            "date": datetime.datetime.fromtimestamp(e["t_ms"]/1000, tz=datetime.timezone.utc).strftime("%Y-%m-%d")
+        })
+
+    step = max(1, len(real_curve) // 350)
+    downsampled_curve = real_curve[::step]
+    if real_curve and real_curve[-1] not in downsampled_curve:
+        downsampled_curve.append(real_curve[-1])
+
+    return all_episodes, downsampled_curve
 
 def get_live_matrix(records):
     latest = {}
@@ -170,14 +240,12 @@ def api_metrics():
     return JSONResponse(load_metrics())
 
 @app.get("/api/episodes")
-def api_episodes(limit: int = 30):
+def api_episodes(limit: int = 40):
     vi = load_venue_index()
     if not vi:
         return JSONResponse({"episodes": [], "error": "venue_index not found"})
-    eps = run_signal_pipeline(vi)
+    eps, _ = compute_empirical_episodes_and_curve(vi)
     last = eps[-limit:] if len(eps) > limit else eps
-    for e in last:
-        e["ts_human"] = datetime.datetime.fromtimestamp(e["t_ms"]/1000, tz=datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
     return JSONResponse({"episodes": last, "total": len(eps)})
 
 @app.get("/api/equity")
@@ -185,11 +253,7 @@ def api_equity():
     vi = load_venue_index()
     if not vi:
         return JSONResponse({"curve": []})
-    eps = run_signal_pipeline(vi)
-    curve = build_equity_curve(eps)
-    if len(curve) > 400:
-        step = len(curve) // 400
-        curve = curve[::step]
+    _, curve = compute_empirical_episodes_and_curve(vi)
     return JSONResponse({"curve": curve})
 
 @app.get("/api/tape/live")
