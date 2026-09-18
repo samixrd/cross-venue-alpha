@@ -1,1 +1,6 @@
-﻿urllib3
+urllib3
+fastapi
+uvicorn[standard]
+numpy
+scipy
+matplotlib

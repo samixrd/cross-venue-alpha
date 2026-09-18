@@ -129,6 +129,23 @@ VEGA is architected for turnkey deployment with Bitget's full tool stack:
 
 ---
 
+## 🖥️ Live Quantitative Terminal & Web Dashboard
+
+VEGA includes a standalone, zero-dependency quantitative terminal dashboard designed for real-time monitoring and verification:
+* **Real-time Live Sync:** Polls every 5s for live quotes, active dislocation signals, and cryptographic hash chain integrity.
+* **Interactive Visuals:** Dynamic cumulative equity curve with walk-forward split and drawdown analysis.
+* **Zero External Build Setup:** Pure native HTML5/CSS/JavaScript with FastAPI backend (`python dashboard/server.py`).
+
+```bash
+# Launch the dashboard:
+python dashboard/server.py
+
+# Access the interface:
+# Open http://localhost:8000 in your browser
+```
+
+---
+
 ## Reproduce Everything in 1 Command
 
 All public data, no API keys required:
@@ -141,10 +158,14 @@ python research/round9_clusters.py
 
 # Verify tape Merkle integrity:
 python verification/vega_root.py verify
+
+# Run live dashboard terminal:
+python dashboard/server.py
 ```
 
 ## Layout
 ```
+dashboard/     index.html (live terminal UI) · server.py (FastAPI live data backend)
 data/          venue_index.json (13 syms x 3 venues, 1h bars + funding) + tape/
 docs/          equity_curve.png, drawdown.png, dislocation_convergence.png, quant_metrics.json
 research/      generate_metrics_and_plots.py, lead-lag, battery, cluster inference

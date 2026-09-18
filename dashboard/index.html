@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VEGA // Cross-Venue Arbitrage Terminal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #08090a;
+      --bg-1: #101214;
+      --bg-2: #17191c;
+      --bg-3: #1e2125;
+      --line: #24272b;
+      --line-strong: #383c42;
+      --ink: #e8eaed;
+      --ink-2: #a2a9b0;
+      --ink-3: #868d96;
+      --ink-4: #454a50;
+      --fam-collecte: #3376f6;
+      --fam-analyse: #dfc24d;
+      --fam-action: #eb6628;
+      --green: #2ecc71;
+      --red: #e74c3c;
+      --focus: #3376f6;
+      --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+      --prose: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      border-radius: 0 !important;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.5;
+      min-height: 100vh;
+      position: relative;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.35;
+      background-image:
+        linear-gradient(45deg, var(--line) 25%, transparent 25%, transparent 75%, var(--line) 75%),
+        linear-gradient(45deg, var(--line) 25%, transparent 25%, transparent 75%, var(--line) 75%);
+      background-size: 6px 6px;
+      background-position: 0 0, 3px 3px;
+    }
+
+    #app {
+      position: relative;
+      z-index: 1;
+      max-width: 1680px;
+      margin: 0 auto;
+      padding: 16px 24px 48px;
+    }
+
+    /* TOP BAR */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--line-strong);
+      padding-bottom: 14px;
+      margin-bottom: 20px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand-box {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+    }
+
+    .brand-title {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-pill {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 6px;
+      background: var(--bg-2);
+      border: 1px solid var(--line-strong);
+      color: var(--ink-2);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      color: var(--ink-3);
+      letter-spacing: 0.02em;
+    }
+
+    .header-center {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .badge-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      padding: 4px 10px;
+      background: var(--bg-1);
+      border: 1px solid var(--line);
+      color: var(--ink);
+      letter-spacing: 0.04em;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--green);
+      display: inline-block;
+      box-shadow: 0 0 6px var(--green);
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .status-dot.orange {
+      background: var(--fam-action);
+      box-shadow: 0 0 6px var(--fam-action);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 11px;
+      color: var(--ink-2);
+    }
+
+    .btn-action {
+      background: var(--bg-1);
+      border: 1px solid var(--line-strong);
+      color: var(--ink);
+      padding: 5px 12px;
+      font-family: var(--mono);
+      font-size: 11px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .btn-action:hover {
+      background: var(--bg-2);
+      border-color: var(--ink-3);
+    }
+
+    /* METRICS STRIP */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .metric-card {
+      background: var(--bg-1);
+      border: 1px solid var(--line);
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 116px;
+      position: relative;
+    }
+
+    .metric-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--line-strong);
+    }
+
+    .metric-card.accent-collecte::before { background: var(--fam-collecte); }
+    .metric-card.accent-analyse::before { background: var(--fam-analyse); }
+    .metric-card.accent-action::before { background: var(--fam-action); }
+    .metric-card.accent-green::before { background: var(--green); }
+
+    .metric-label {
+      font-size: 11px;
+      color: var(--ink-3);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .metric-value {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      margin: 8px 0 4px;
+    }
+
+    .metric-sub {
+      font-size: 11px;
+      color: var(--ink-2);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* WORKSPACE GRID */
+    .layout-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 1100px) {
+      .layout-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel {
+      background: var(--bg-1);
+      border: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-header {
+      padding: 10px 14px;
+      background: var(--bg-2);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--ink-2);
+    }
+
+    .panel-body {
+      padding: 14px;
+      flex: 1;
+    }
+
+    /* CHART SVG CONTAINER */
+    .chart-container {
+      width: 100%;
+      height: 280px;
+      position: relative;
+    }
+
+    .chart-container svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* VENUE MATRIX & DISLOCATION */
+    .venue-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .venue-item {
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .venue-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-transform: uppercase;
+    }
+
+    .venue-stats {
+      text-align: right;
+      font-size: 11px;
+      color: var(--ink-2);
+    }
+
+    /* TABLES */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      max-height: 380px;
+      overflow-y: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 11px;
+    }
+
+    th {
+      background: var(--bg-2);
+      color: var(--ink-3);
+      padding: 8px 10px;
+      font-weight: 600;
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    td {
+      padding: 7px 10px;
+      border-bottom: 1px solid var(--line);
+      color: var(--ink-2);
+      white-space: nowrap;
+    }
+
+    tr:hover td {
+      background: var(--bg-2);
+      color: var(--ink);
+    }
+
+    .tag-buy {
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    .tag-sell {
+      color: var(--fam-action);
+      font-weight: 600;
+    }
+
+    .mono-hash {
+      color: var(--ink-3);
+      font-family: var(--mono);
+      font-size: 10px;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--line);
+      padding-top: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: var(--ink-4);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .sync-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--ink-3);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="app">
+    <!-- HEADER -->
+    <header>
+      <div class="brand-box">
+        <div class="brand-title">
+          <span>VEGA</span>
+          <span class="brand-pill">ALPHA FACTORY ? ARBITRAGE</span>
+        </div>
+        <div class="brand-sub">Cross-Venue Net-of-Carry Dislocation // Bitget AI Hackathon S2</div>
+      </div>
+
+      <div class="header-center">
+        <div class="badge-status">
+          <span class="status-dot" id="cloudDot"></span>
+          <span id="collectorStatus">AUTONOMOUS TAPE ACTIVE</span>
+        </div>
+        <div class="badge-status">
+          <span>PROTOCOL HASH:</span>
+          <span class="mono-hash" id="protoHash">...</span>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <div id="utcClock">--:--:-- UTC</div>
+        <button class="btn-action" onclick="refreshAll()">
+          <span>SYNC NOW</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- METRICS STRIP -->
+    <div class="metrics-grid">
+      <div class="metric-card accent-green">
+        <div class="metric-label">
+          <span>Annualized Sharpe (OOS)</span>
+          <span class="brand-pill">WALK-FORWARD</span>
+        </div>
+        <div class="metric-value" id="mSharpeOos">13.28</div>
+        <div class="metric-sub">
+          <span>In-Sample: <b id="mSharpeIs">20.69</b></span>
+          <span style="color: var(--green);">Decay: 0.64 (PASS)</span>
+        </div>
+      </div>
+
+      <div class="metric-card accent-analyse">
+        <div class="metric-label">
+          <span>Annualized Sortino</span>
+          <span>DOWNSIDE RISK</span>
+        </div>
+        <div class="metric-value" id="mSortino">36.75</div>
+        <div class="metric-sub">
+          <span>OOS: <b id="mSortinoOos">31.69</b></span>
+          <span>IS: <b id="mSortinoIs">40.35</b></span>
+        </div>
+      </div>
+
+      <div class="metric-card accent-action">
+        <div class="metric-label">
+          <span>Net Win Rate (%)</span>
+          <span>1,565 EPISODES</span>
+        </div>
+        <div class="metric-value" id="mWinRate">52.9%</div>
+        <div class="metric-sub">
+          <span>Mean Net: <b id="mMeanNet">+12.1 bps</b></span>
+          <span>Fee: 24 bps net</span>
+        </div>
+      </div>
+
+      <div class="metric-card accent-collecte">
+        <div class="metric-label">
+          <span>Tape Merkle Audit</span>
+          <span id="chainStatusPill" class="brand-pill">INTACT</span>
+        </div>
+        <div class="metric-value" id="mRecordCount">0</div>
+        <div class="metric-sub">
+          <span>Chain Tip: <span class="mono-hash" id="mChainTip">--</span></span>
+          <span id="mSymbolsVenues">13 sym ? 3 ven</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MIDDLE ROW: EQUITY CURVE & VENUE MATRIX -->
+    <div class="layout-row">
+      <!-- EQUITY CURVE PANEL -->
+      <div class="panel">
+        <div class="panel-header">
+          <span>CUMULATIVE NET PNL (105-DAY EMPIRICAL WALK-FORWARD SPLIT)</span>
+          <span style="color: var(--green);">+18,911 BPS TOTAL REALIZED</span>
+        </div>
+        <div class="panel-body">
+          <div class="chart-container" id="equityChartContainer">
+            <svg id="equitySvg" viewBox="0 0 800 280" preserveAspectRatio="none"></svg>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 10px; color: var(--ink-3); margin-top: 8px;">
+            <span>DAY 1 (MAY 29) ? IN-SAMPLE TRAINING</span>
+            <span style="color: var(--fam-analyse);">DAY 60 SPLIT (JULY 27)</span>
+            <span>DAY 105 (SEPT 15) ? OUT-OF-SAMPLE</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- VENUE ARBITRAGE ROUTE PANEL -->
+      <div class="panel">
+        <div class="panel-header">
+          <span>TRI-VENUE CONSENSUS MATRIX</span>
+          <span class="mono-hash">MARKET NEUTRAL</span>
+        </div>
+        <div class="panel-body">
+          <div class="venue-list">
+            <div class="venue-item">
+              <div class="venue-name">
+                <span style="width: 6px; height: 6px; background: #00f2fe; display: inline-block;"></span>
+                <span>Bitget (UTA v3)</span>
+              </div>
+              <div class="venue-stats">
+                <div>Taker: 6.0 bps</div>
+                <div style="color: var(--green);">Execution Ready</div>
+              </div>
+            </div>
+
+            <div class="venue-item">
+              <div class="venue-name">
+                <span style="width: 6px; height: 6px; background: #f3ba2f; display: inline-block;"></span>
+                <span>Binance (USDT-M)</span>
+              </div>
+              <div class="venue-stats">
+                <div>Taker: 6.0 bps</div>
+                <div>Liquidity Anchor</div>
+              </div>
+            </div>
+
+            <div class="venue-item">
+              <div class="venue-name">
+                <span style="width: 6px; height: 6px; background: #ff9900; display: inline-block;"></span>
+                <span>Bybit (Linear)</span>
+              </div>
+              <div class="venue-stats">
+                <div>Taker: 6.0 bps</div>
+                <div>Perpetual Feed</div>
+              </div>
+            </div>
+
+            <div style="background: var(--bg-2); border: 1px dashed var(--line); padding: 10px; margin-top: 6px; font-size: 11px;">
+              <div style="color: var(--ink-2); margin-bottom: 4px; font-weight: 600;">EXECUTION CONSTRAINTS</div>
+              <div style="color: var(--ink-3); font-size: 10px; line-height: 1.4;">
+                Pair: Short Rich (Bid) / Long Cheap (Ask)<br>
+                Exit: 6-Hour Fixed Holding Horizon<br>
+                Cost Floor: 24 bps Taker + Dynamic Impact + Funding
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM ROW: RECENT SIGNAL EPISODES & LIVE TAPE FEED -->
+    <div class="layout-row">
+      <!-- SIGNAL EPISODES TABLE -->
+      <div class="panel">
+        <div class="panel-header">
+          <span>RECENT DISLOCATION SIGNALS (|Z| &ge; 2.0 PAIRED FADES)</span>
+          <span id="episodesCount">LOADING...</span>
+        </div>
+        <div class="panel-body" style="padding: 0;">
+          <div class="table-container">
+            <table id="episodesTable">
+              <thead>
+                <tr>
+                  <th>Timestamp</th>
+                  <th>Symbol</th>
+                  <th>Short Leg (Rich)</th>
+                  <th>Long Leg (Cheap)</th>
+                  <th>Z-Rich</th>
+                  <th>Z-Cheap</th>
+                  <th>Holding</th>
+                </tr>
+              </thead>
+              <tbody id="episodesTbody">
+                <tr><td colspan="7" style="text-align: center; color: var(--ink-4);">Loading signal history...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- LIVE TAPE INGESTION FEED -->
+      <div class="panel">
+        <div class="panel-header">
+          <span>LIVE CLOUD TAPE FEED</span>
+          <span class="mono-hash" id="tapeRecordCount">0 TICKS</span>
+        </div>
+        <div class="panel-body" style="padding: 0;">
+          <div class="table-container">
+            <table id="tapeTable">
+              <thead>
+                <tr>
+                  <th>Venue</th>
+                  <th>Sym</th>
+                  <th>Bid</th>
+                  <th>Ask</th>
+                  <th>Spread</th>
+                  <th>Funding</th>
+                </tr>
+              </thead>
+              <tbody id="tapeTbody">
+                <tr><td colspan="6" style="text-align: center; color: var(--ink-4);">Waiting for quote ticks...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <div>
+        <span>VEGA ARBITRAGE FACTORY // BITGET AI HACKATHON S2</span>
+        <span style="margin-left: 14px; color: var(--ink-3);">FROZEN PROTOCOL V1.0</span>
+      </div>
+      <div class="sync-badge">
+        <span class="status-dot" style="width: 5px; height: 5px;"></span>
+        <span id="lastSyncTime">Auto-sync active (5s cadence)</span>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // UTC Clock
+    function updateClock() {
+      const now = new Date();
+      const utcStr = now.toISOString().replace('T', ' ').substring(0, 19) + ' UTC';
+      document.getElementById('utcClock').textContent = utcStr;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Fetch Status
+    async function loadStatus() {
+      try {
+        const res = await fetch('/api/status');
+        const data = await res.json();
+        if (data.protocol_hash) {
+          document.getElementById('protoHash').textContent = data.protocol_hash;
+        }
+        document.getElementById('collectorStatus').textContent = data.is_weekend 
+          ? 'WEEKEND 5-MIN DENSE SAMPLING' 
+          : 'WEEKDAY AUTONOMOUS COLLECTOR';
+        
+        document.getElementById('mRecordCount').textContent = (data.record_count || 0).toLocaleString();
+        document.getElementById('mChainTip').textContent = data.chain_tip || 'GENESIS';
+        document.getElementById('chainStatusPill').textContent = data.chain_status || 'INTACT';
+        document.getElementById('tapeRecordCount').textContent = (data.record_count || 0) + ' TICKS';
+        
+        if (data.is_weekend) {
+          document.getElementById('cloudDot').classList.add('orange');
+        } else {
+          document.getElementById('cloudDot').classList.remove('orange');
+        }
+      } catch (e) {
+        console.error('Status fetch error', e);
+      }
+    }
+
+    // Fetch Metrics
+    async function loadMetrics() {
+      try {
+        const res = await fetch('/api/metrics');
+        const data = await res.json();
+        if (data.out_of_sample) {
+          document.getElementById('mSharpeOos').textContent = data.out_of_sample.sharpe.toFixed(2);
+          document.getElementById('mSortinoOos').textContent = data.out_of_sample.sortino.toFixed(2);
+        }
+        if (data.in_sample) {
+          document.getElementById('mSharpeIs').textContent = data.in_sample.sharpe.toFixed(2);
+          document.getElementById('mSortinoIs').textContent = data.in_sample.sortino.toFixed(2);
+        }
+        if (data.full_period) {
+          document.getElementById('mSortino').textContent = data.full_period.sortino.toFixed(2);
+          document.getElementById('mWinRate').textContent = data.full_period.win_rate.toFixed(1) + '%';
+          document.getElementById('mMeanNet').textContent = '+' + data.full_period.mean_net_bps.toFixed(1) + ' bps';
+        }
+      } catch (e) {
+        console.error('Metrics fetch error', e);
+      }
+    }
+
+    // Fetch & Draw Equity Curve
+    async function loadEquity() {
+      try {
+        const res = await fetch('/api/equity');
+        const data = await res.json();
+        const curve = data.curve || [];
+        if (curve.length === 0) return;
+
+        const svg = document.getElementById('equitySvg');
+        const width = 800;
+        const height = 280;
+        const padX = 20;
+        const padY = 25;
+
+        let maxVal = -Infinity, minVal = Infinity;
+        curve.forEach(pt => {
+          if (pt.cum_bps > maxVal) maxVal = pt.cum_bps;
+          if (pt.cum_bps < minVal) minVal = pt.cum_bps;
+        });
+
+        if (minVal > 0) minVal = 0;
+        const range = (maxVal - minVal) || 1;
+
+        const points = curve.map((pt, i) => {
+          const x = padX + (i / (curve.length - 1)) * (width - 2 * padX);
+          const y = height - padY - ((pt.cum_bps - minVal) / range) * (height - 2 * padY);
+          return `${x.toFixed(1)},${y.toFixed(1)}`;
+        }).join(' ');
+
+        const splitIdx = Math.floor(curve.length * 0.58);
+        const splitX = (padX + (splitIdx / (curve.length - 1)) * (width - 2 * padX)).toFixed(1);
+
+        svg.innerHTML = `
+          <line x1="${padX}" y1="${padY}" x2="${width-padX}" y2="${padY}" stroke="#24272b" stroke-dasharray="3 3" />
+          <line x1="${padX}" y1="${height/2}" x2="${width-padX}" y2="${height/2}" stroke="#24272b" stroke-dasharray="3 3" />
+          <line x1="${padX}" y1="${height-padY}" x2="${width-padX}" y2="${height-padY}" stroke="#24272b" />
+
+          <line x1="${splitX}" y1="${padY}" x2="${splitX}" y2="${height-padY}" stroke="#dfc24d" stroke-dasharray="4 4" opacity="0.6" />
+          <text x="${parseFloat(splitX) - 6}" y="${padY + 12}" fill="#dfc24d" font-size="10" text-anchor="end" font-family="monospace">IN-SAMPLE</text>
+          <text x="${parseFloat(splitX) + 6}" y="${padY + 12}" fill="#dfc24d" font-size="10" text-anchor="start" font-family="monospace">OUT-OF-SAMPLE</text>
+
+          <polyline fill="none" stroke="#2ecc71" stroke-width="2" points="${points}" />
+        `;
+      } catch (e) {
+        console.error('Equity fetch error', e);
+      }
+    }
+
+    // Fetch Episodes
+    async function loadEpisodes() {
+      try {
+        const res = await fetch('/api/episodes?limit=25');
+        const data = await res.json();
+        const eps = data.episodes || [];
+        document.getElementById('episodesCount').textContent = (data.total || eps.length) + ' DETECTED';
+        const tbody = document.getElementById('episodesTbody');
+        if (eps.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--ink-4);">No episodes found.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = eps.slice().reverse().map(e => `
+          <tr>
+            <td class="mono-hash">${e.ts_human || ''}</td>
+            <td style="font-weight: 600; color: var(--ink);">${e.sym || ''}</td>
+            <td class="tag-sell">SHORT ${e.rich.toUpperCase()}</td>
+            <td class="tag-buy">LONG ${e.cheap.toUpperCase()}</td>
+            <td style="color: var(--fam-action);">${e.z_rich ? e.z_rich.toFixed(2) : '--'}</td>
+            <td style="color: var(--green);">${e.z_cheap ? e.z_cheap.toFixed(2) : '--'}</td>
+            <td>6 Hours</td>
+          </tr>
+        `).join('');
+      } catch (e) {
+        console.error('Episodes fetch error', e);
+      }
+    }
+
+    // Fetch Live Tape
+    async function loadTape() {
+      try {
+        const res = await fetch('/api/tape/live?limit=15');
+        const data = await res.json();
+        const records = data.records || [];
+        const tbody = document.getElementById('tapeTbody');
+        if (records.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--ink-4);">Collecting live quote tape...</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = records.map(r => `
+          <tr>
+            <td style="font-weight: 600; text-transform: uppercase;">${r.venue}</td>
+            <td style="color: var(--ink);">${r.sym}</td>
+            <td style="color: var(--green);">${r.bid ? r.bid.toFixed(2) : '--'}</td>
+            <td style="color: var(--fam-action);">${r.ask ? r.ask.toFixed(2) : '--'}</td>
+            <td>${r.spread_bps} bps</td>
+            <td class="mono-hash">${r.funding_rate ? (r.funding_rate * 100).toFixed(4) + '%' : '0.0000%'}</td>
+          </tr>
+        `).join('');
+      } catch (e) {
+        console.error('Tape fetch error', e);
+      }
+    }
+
+    function refreshAll() {
+      loadStatus();
+      loadMetrics();
+      loadEquity();
+      loadEpisodes();
+      loadTape();
+      document.getElementById('lastSyncTime').textContent = 'Synced ' + new Date().toLocaleTimeString();
+    }
+
+    refreshAll();
+    setInterval(refreshAll, 5000);
+  </script>
+</body>
+</html>
