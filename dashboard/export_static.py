@@ -1,4 +1,4 @@
-﻿"""
+"""
 Export static JSON data snapshots for GitHub Pages static hosting.
 Generates a standalone public/ folder with index.html and json feeds.
 """
@@ -76,6 +76,44 @@ def build_equity_curve(episodes):
         curve.append({"t_ms": ep["t_ms"], "cum_bps": round(cumulative, 1), "net_bps": round(net, 1), "sym": ep.get("sym","")})
     return curve
 
+def get_live_matrix(records):
+    latest = {}
+    for r in records:
+        sym = r.get("sym")
+        venue = r.get("venue")
+        if sym and venue:
+            latest[(sym, venue)] = r
+
+    symbols = ["TSLAUSDT","NVDAUSDT","AAPLUSDT","AMZNUSDT","MSFTUSDT","GOOGLUSDT","METAUSDT","SPYUSDT","QQQUSDT","COINUSDT","MSTRUSDT","HOODUSDT","CRCLUSDT"]
+    matrix = []
+    for s in symbols:
+        bg = latest.get((s, "bitget"), {})
+        bn = latest.get((s, "binance"), {})
+        by = latest.get((s, "bybit"), {})
+
+        bg_mid = bg.get("mid") or ((bg.get("bid",0)+bg.get("ask",0))/2 if bg.get("bid") else None)
+        bn_mid = bn.get("mid") or ((bn.get("bid",0)+bn.get("ask",0))/2 if bn.get("bid") else None)
+        by_mid = by.get("mid") or ((by.get("bid",0)+by.get("ask",0))/2 if by.get("bid") else None)
+
+        mids = [m for m in [bg_mid, bn_mid, by_mid] if m and m > 0]
+        mean_mid = sum(mids) / len(mids) if mids else 0.0
+
+        disloc_bps = 0.0
+        if mids and mean_mid > 0:
+            max_diff = max(abs(m - mean_mid) for m in mids)
+            disloc_bps = round((max_diff / mean_mid) * 10000, 2)
+
+        matrix.append({
+            "sym": s,
+            "bitget": round(bg_mid, 2) if bg_mid else None,
+            "binance": round(bn_mid, 2) if bn_mid else None,
+            "bybit": round(by_mid, 2) if by_mid else None,
+            "disloc_bps": disloc_bps,
+            "bg_spread": round(bg.get("spread_bps", 0), 2) if bg else None,
+            "last_ts": (bg.get("ts_utc") or bn.get("ts_utc") or by.get("ts_utc",""))[:19].replace("T"," ")
+        })
+    return matrix
+
 records = load_tape_records()
 syms = sorted(set(r.get("sym") for r in records))
 venues = sorted(set(r.get("venue") for r in records))
@@ -85,6 +123,7 @@ tape_files = sorted(glob.glob(str(ROOT / "tape" / "20*.jsonl")))
 tape_dates = [Path(f).stem for f in tape_files]
 proto_hash_file = ROOT / "PROTOCOL_HASH.txt"
 proto_hash = proto_hash_file.read_text().strip()[:16] if proto_hash_file.exists() else ""
+matrix = get_live_matrix(records)
 
 status_data = {
     "record_count": len(records),
@@ -99,8 +138,10 @@ status_data = {
     "is_weekend": is_weekend_now(),
     "protocol_hash": proto_hash,
     "collector_mode": "WEEKEND 5-min sampling" if is_weekend_now() else "WEEKDAY hourly sampling",
+    "matrix": matrix,
 }
 (API_DIR / "status.json").write_text(json.dumps(status_data, indent=2))
+(API_DIR / "matrix.json").write_text(json.dumps({"matrix": matrix}, indent=2))
 
 # metrics.json
 metrics_file = ROOT / "docs" / "quant_metrics.json"
@@ -111,7 +152,7 @@ metrics_data = json.loads(metrics_file.read_text()) if metrics_file.exists() els
 (API_DIR / "chain.json").write_text(json.dumps(chain, indent=2))
 
 # tape_live.json
-last = list(reversed(records[-20:])) if len(records) > 20 else list(reversed(records))
+last = list(reversed(records[-60:])) if len(records) > 60 else list(reversed(records))
 tape_live = [{"ts": r.get("ts_utc","")[:19].replace("T"," "), "sym": r.get("sym",""), "venue": r.get("venue",""), "bid": r.get("bid"), "ask": r.get("ask"), "spread_bps": round(r.get("spread_bps",0),2), "funding_rate": r.get("funding_rate",0)} for r in last]
 (API_DIR / "tape_live.json").write_text(json.dumps({"records": tape_live, "total": len(records)}, indent=2))
 

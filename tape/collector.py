@@ -60,7 +60,10 @@ def fetch_bitget():
     return out
 
 def fetch_binance():
-    bt=get("https://fapi.binance.com/fapi/v1/ticker/bookTicker")
+    try:
+        bt=get("https://fapi.binance.com/fapi/v1/ticker/bookTicker")
+    except Exception:
+        bt=get("https://fapi1.binance.com/fapi/v1/ticker/bookTicker")
     px={r['symbol']:float(r['price']) for r in get("https://fapi.binance.com/fapi/v1/ticker/price")}
     pi={r['symbol']:r for r in get("https://fapi.binance.com/fapi/v1/premiumIndex")}
     out={}
@@ -77,7 +80,10 @@ def fetch_binance():
     return out
 
 def fetch_bybit():
-    d=get("https://api.bybit.com/v5/market/tickers?category=linear")
+    try:
+        d=get("https://api.bybit.com/v5/market/tickers?category=linear")
+    except Exception:
+        d=get("https://api.bytick.com/v5/market/tickers?category=linear")
     out={}
     for t in d.get("result",{}).get("list",[]):
         s=t.get('symbol')

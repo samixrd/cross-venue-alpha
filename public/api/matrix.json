@@ -1,39 +1,4 @@
 {
-  "record_count": 468,
-  "symbol_count": 13,
-  "venue_count": 3,
-  "symbols": [
-    "AAPLUSDT",
-    "AMZNUSDT",
-    "COINUSDT",
-    "CRCLUSDT",
-    "GOOGLUSDT",
-    "HOODUSDT",
-    "METAUSDT",
-    "MSFTUSDT",
-    "MSTRUSDT",
-    "NVDAUSDT",
-    "QQQUSDT",
-    "SPYUSDT",
-    "TSLAUSDT"
-  ],
-  "venues": [
-    "binance",
-    "bitget",
-    "bybit"
-  ],
-  "last_ts": "2026-09-18T18:43:45+00:00",
-  "tape_dates": [
-    "2026-09-15",
-    "2026-09-16",
-    "2026-09-17",
-    "2026-09-18"
-  ],
-  "chain_status": "INTACT",
-  "chain_tip": "6e8a9857bc426a3f",
-  "is_weekend": true,
-  "protocol_hash": "c39cd77da2e5e50c",
-  "collector_mode": "WEEKEND 5-min sampling",
   "matrix": [
     {
       "sym": "TSLAUSDT",
