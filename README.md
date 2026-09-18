@@ -148,22 +148,79 @@ python dashboard/server.py
 
 ---
 
-## Reproduce Everything in 1 Command
+## 🚀 Setup & Quickstart Guide
 
-All public data, no API keys required:
+### Prerequisites
+* **Python 3.10+** (Tested on Python 3.11 & 3.12)
+* **Git**
+* Zero API keys required for public tape collection, empirical backtesting, and cryptographic verification.
+
+### 1. Clone & Environment Setup
 ```bash
-# Recompute all quantitative metrics and regenerate high-resolution plots:
+git clone https://github.com/samixrd/cross-venue-alpha.git
+cd cross-venue-alpha
+
+# Windows
+python -m venv venv
+.\venv\Scripts\activate
+
+# Linux / macOS
+python3 -m venv venv
+source venv/bin/activate
+```
+
+### 2. Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## 🧪 Comprehensive Verification & Testing Guide
+
+Judges and researchers can independently audit and reproduce all empirical results using the commands below:
+
+### Test 1: Reproduce 105-Day Backtest & Generate Plots
+Executes the frozen dislocation protocol on 105 days of multi-venue empirical data, validates in-sample and out-of-sample splits, and outputs high-resolution charts:
+```bash
 python research/generate_metrics_and_plots.py
+```
+* **Expected Result:** Generates 1,565 paired episodes (IS Sharpe: `20.69`, OOS Sharpe: `13.28`, Full: `17.83`, Decay: `0.64`). Generates `docs/equity_curve.png`, `docs/drawdown.png`, and `docs/dislocation_convergence.png`.
 
-# Verify cluster-robust inference:
+### Test 2: Verify Cluster-Robust Statistical Inference
+Tests for non-spurious statistical significance using day-clustered standard errors to account for cross-sectional factor shocks:
+```bash
 python research/round9_clusters.py
+```
+* **Expected Result:** High-beta subset exhibits strong robust t-statistics (`TSLA`: $t=+8.6$, `NVDA`: $t=+11.6$, `AAPL`: $t=+10.5$).
 
-# Verify tape Merkle integrity:
+### Test 3: Verify Cryptographic Merkle Root Integrity
+Validates that the recorded 3-venue forward tape has not been tampered with or modified post-hoc:
+```bash
 python verification/vega_root.py verify
+```
+* **Expected Result:** Prints `VERIFY root_2026-09-18.json: PASS root=... records=338`.
 
-# Run live dashboard terminal:
+### Test 4: Sample Live 3-Venue Quotes (Collector Test)
+Performs an instantaneous live parallel fetch across Bitget, Binance, and Bybit for all 13 symbols:
+```bash
+python tape/collector.py --now
+```
+* **Expected Result:** Prints `v2 sampled 39 records; chain tip [hash]`.
+
+### Test 5: Test Bitget UTA v3 Paired Order Routing (Dry-Run)
+Simulates paired market-neutral order execution using Bitget's contract API `/api/v2/mix/order/place-order`:
+```bash
+python strategy/bitget_executor.py
+```
+* **Expected Result:** Simulates a paired fade (e.g., Short Bitget at Bid, Long Binance at Ask) with `"status": "DRY_RUN_SIMULATED"`.
+
+### Test 6: Launch Local Quantitative Terminal Dashboard
+Starts the local zero-dependency FastAPI server and interactive web UI:
+```bash
 python dashboard/server.py
 ```
+* **Expected Result:** Serves dashboard at `http://localhost:8000` (or visit public deployment at [samixrd.github.io/cross-venue-alpha/](https://samixrd.github.io/cross-venue-alpha/)).
 
 ## Layout
 ```
