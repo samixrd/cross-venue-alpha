@@ -81,15 +81,15 @@ wide, this dies* — that's the falsifier, published in advance.
 ### How it works
 
 ```
-Every 5 min (GitHub Cloud, Ubuntu Server)
-  └─ VEGA-Bot wakes up
+Periodic Cloud Execution (GitHub Actions, Ubuntu Server)
+  └─ VEGA-Bot wakes up (configured cron: '*/5 * * * *')
   └─ Fetches live bid/ask/depth/funding from 3 venues in parallel
        ├─ Bitget  /api/v2/mix/market/tickers
        ├─ Binance /fapi/v1/ticker/bookTicker + /fapi/v1/premiumIndex
        └─ Bybit   /v5/market/tickers?category=linear
   └─ Appends 39 records (13 syms × 3 venues) to tape/YYYY-MM-DD.jsonl
   └─ Updates SHA-256 hash chain (_chain_state.json)
-  └─ Commits & pushes: "tape: 2026-09-18T04:24:03Z [WEEKDAY]"
+  └─ Commits & pushes: "tape: YYYY-MM-DDTHH:MM:SSZ [WEEKEND/WEEKDAY]"
   └─ Goes back to sleep. No human involved.
 ```
 
@@ -97,8 +97,10 @@ Every 5 min (GitHub Cloud, Ubuntu Server)
 
 | Workflow | Trigger | Action |
 |---|---|---|
-| `collector.yml` | Every **5 minutes**, 24/7 | Fetch 3-venue quotes → hash-chain → commit |
+| `collector.yml` | Configured `*/5 * * * *` (runs periodically via GitHub shared queue) | Fetch 3-venue quotes → hash-chain → commit |
 | `vega_root.yml` | **Sunday 17:20 UTC** | Merkle root commitment before weekend verdict |
+
+> **Engineering Note on Runner Scheduling:** While `collector.yml` is configured with a 5-minute schedule (`*/5 * * * *`), GitHub Actions' public shared-runner queue schedules cron tasks based on system availability (firing typically every 2 to 4 hours). The SHA-256 hash-chain explicitly encodes UTC timestamps into each block, maintaining cryptographic validity and chain integrity regardless of execution intervals.
 
 ### Tamper-evidence by design
 
